@@ -9,6 +9,7 @@ import { api } from "../services/api";
 import { auth, type Tokens } from "../services/auth";
 import { jwtDecode } from "jwt-decode";
 import { ROLES, type RegisterDto, type Role } from "@/lib/constants";
+import { toast } from "sonner";
 
 export interface JwtPayload {
   sub: string;
@@ -74,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       auth.clear();
       setUser(null);
       setIsAuth(false);
+      toast.success("Logged out successfully.")
     }
   }
 
