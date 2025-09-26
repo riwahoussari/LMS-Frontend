@@ -12,7 +12,12 @@ import SortIconSvg from "@/components/ui/SortIconSvg";
 import { CourseList } from "@/components/courses/CourseList";
 import SearchBar from "@/components/courses/SearchBar";
 import MyDialog from "@/components/courses/MyDialog";
-import { SortDirectionSelect, SortOptionSelect } from "@/components/courses/SortOptionSelect";
+import {
+  SortDirectionSelect,
+  SortOptionSelect,
+} from "@/components/courses/SortOptionSelect";
+import MyPagination from "@/components/courses/MyPagination";
+
 
 export default function DiscoverNewPage() {
   const { user } = useAuth();
@@ -22,15 +27,26 @@ export default function DiscoverNewPage() {
 }
 
 function DiscoverPage() {
+  // filters
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [tagIds, setTagIds] = useState<string[]>([]);
-  const [sortBy, setSortBy] = useState(
-    COURSE_SORT_OPTIONS[0]?.value || ""
-  );
+  // sorting
+  const [sortBy, setSortBy] = useState(COURSE_SORT_OPTIONS[0]?.value || "");
   const [sortAsc, setSortAsc] = useState(true);
+  // pagination
+  const limit = 1;
+  const [page, setPage] = useState(0);
 
-  const query = { title, categoryId, tagIds, sortBy, sortAsc };
+  const query = {
+    title,
+    categoryId,
+    tagIds,
+    sortBy,
+    sortAsc,
+    limit,
+    offset: page * limit,
+  };
   const { data, error } = useAsync(getCourses, [query], [query]);
 
   useEffect(() => {
@@ -40,7 +56,11 @@ function DiscoverPage() {
   return (
     <main>
       <div className="flex items-end flex-wrap gap-4">
-        <SearchBar placeholder="Search by title" value={title} onChange={setTitle} />
+        <SearchBar
+          placeholder="Search by title"
+          value={title}
+          onChange={setTitle}
+        />
 
         {/* filtering dialog */}
         <MyDialog
@@ -65,17 +85,22 @@ function DiscoverPage() {
             setSortAsc(true);
           }}
         >
-          <SortOptionSelect options={COURSE_SORT_OPTIONS} sortBy={sortBy} setSortBy={setSortBy} />
+          <SortOptionSelect
+            options={COURSE_SORT_OPTIONS}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+          />
           <SortDirectionSelect sortAsc={sortAsc} setSortAsc={setSortAsc} />
         </MyDialog>
       </div>
 
       {/* cards */}
-      <CourseList data={data} />
+      <CourseList data={data?.items} />
+
+      {/* pagination */}
+      {data && data.items.length > 0 && <MyPagination MAX_PAGES={Math.ceil(data.total / limit)} page={page} setPage={setPage} />}
     </main>
   );
 }
-
-
 
 

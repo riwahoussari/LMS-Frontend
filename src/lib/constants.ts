@@ -7,6 +7,13 @@ export const ROLES = {
   TUTOR: "tutor",
 };
 
+export type PagedResult<T> = {
+  items: T[];
+  total: number;
+  limit?: number;
+  offset?: number;
+};
+
 export type CourseStatus = "Draft" | "Published" | "Archived";
 
 export type TSelectOption = { value: string; text: string };
@@ -27,7 +34,7 @@ export type CourseFitlersType = {
   sortAsc?: boolean;
   limit?: number;
   offset?: number;
-}
+};
 
 export type CourseDto = {
   id: string;
@@ -95,7 +102,14 @@ export type EnrollmentStatus =
   | "Failed"
   | "Suspended"
   | "Dropped";
-export const ENROLLMENT_STATUS_LIST = ["Pending", "Active", "Passed", "Failed", "Suspended", "Dropped"]
+export const ENROLLMENT_STATUS_LIST = [
+  "Pending",
+  "Active",
+  "Passed",
+  "Failed",
+  "Suspended",
+  "Dropped",
+];
 
 export type EnrollmentDto = {
   course: PartialCourseDto;
