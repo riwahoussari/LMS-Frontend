@@ -2,37 +2,47 @@ import { useEffect, useState } from "react";
 
 const cache: Record<string, any> = {};
 
-export function useCachedAsync<T, A extends any[]>(
-  key: string,
-  fn: (...args: A) => Promise<T>,
-  args: A,
+type AsyncFn<TArgs extends any[], TResult> = (
+  ...args: TArgs
+) => Promise<TResult>;
+
+export function useCachedAsync<TArgs extends any[], TResult>(
+  cacheKey: string,
+  fn: AsyncFn<TArgs, TResult>,
+  args: TArgs,
   deps: any[] = []
 ) {
-  const [data, setData] = useState<T | null>(cache[key] ?? null);
-  const [loading, setLoading] = useState(!cache[key]);
-  const [error, setError] = useState<any>(null);
+  const [data, setData] = useState<TResult | null>(cache[cacheKey] ?? null);
+  const [error, setError] = useState<Error | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (cache[key]) return; // already cached
+    if (cache[cacheKey]) {
+      setData(cache[cacheKey]);
+      return;
+    }
 
     let cancelled = false;
     setLoading(true);
-    setError(null);
-
     fn(...args)
-      .then((res) => {
+      .then((result) => {
         if (!cancelled) {
-          cache[key] = res;
-          setData(res);
+          cache[cacheKey] = result;
+          setData(result);
         }
       })
-      .catch((err) => !cancelled && setError(err))
-      .finally(() => !cancelled && setLoading(false));
+      .catch((err) => {
+        if (!cancelled) setError(err);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
 
     return () => {
       cancelled = true;
     };
-  }, [key, ...deps]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cacheKey, ...deps]);
 
-  return { data, loading, error };
+  return { data, error, loading };
 }

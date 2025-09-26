@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { getTags } from "@/services/tags";
-import { MultiSelect } from "../ui/MultiSelect";
+import { MultiSelect } from "../ui/custom/MultiSelect";
 import { Label } from "@radix-ui/react-label";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
 
@@ -24,7 +24,7 @@ export default function TagsSelect({ tagIds, setTagIds }: Props) {
   return (
     <div>
       <Label>
-        <p className="opacity-80 ms-1 mb-1">Tags:</p>
+        <p className="opacity-80 ms-1 mb-2">Tags:</p>
       </Label>
       <MultiSelect
         options={tags ? tags.map(tag => {return {value: tag.id, label: tag.name}}) : []}

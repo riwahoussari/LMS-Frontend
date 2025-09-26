@@ -1,6 +1,5 @@
 import type { CourseDto, CourseFitlersType, EnrollmentDto, PagedResult } from "@/lib/constants";
 import { api } from "./api";
-// import type { CourseDto, CourseFilters } from "@/lib/constants";
 
 export async function getCourses(filters: CourseFitlersType): Promise<PagedResult<CourseDto>> {
   const res = await api.get<PagedResult<CourseDto>>("/courses", { params: filters, paramsSerializer: {indexes: null} });

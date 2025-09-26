@@ -4,13 +4,13 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { ThemeToggle } from "./components/layout/ThemeToggle";
-import ProtectedRoute from "./components/layout/ProtectedRoute";
+import { ThemeToggle } from "./components/shared/ThemeToggle";
+import ProtectedRoute from "./components/shared/ProtectedRoute";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import { ROLES } from "./lib/constants";
-import Navbar from "./components/layout/Navbar";
+import Navbar from "./components/shared/Navbar";
 import DiscoverNewPage from "./pages/DiscoverNewPage";
 import NotFoundPage from "./pages/NotFoundPage";
 

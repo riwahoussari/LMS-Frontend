@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import BurgerMenuSvg from "@/components/ui/BurgerMenuSvg";
+import BurgerMenuSvg from "@/components/ui/custom/BurgerMenuSvg";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 

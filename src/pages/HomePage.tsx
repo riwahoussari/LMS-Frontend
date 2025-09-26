@@ -2,17 +2,12 @@ import { useAuth } from "@/context/AuthContext";
 import {
   ENROLLMENT_STATUS_LIST,
   ROLES,
-  type CourseDto,
   type EnrollmentDto,
 } from "@/lib/constants";
 import NotFoundPage from "./NotFoundPage";
 import { useEffect, useState } from "react";
 import { useAsync } from "@/hooks/useAsync";
 import { toast } from "sonner";
-import CourseCard, {
-  SkeletonCourseCard,
-} from "@/components/courses/CourseCard";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getMyEnrollments } from "@/services/enrollments";
 import EnrollmentCard, {
   SkeletonEnrollmentCard,
@@ -63,7 +58,7 @@ function StudentHomePage() {
 
         <div>
           <Label>
-            <p className="opacity-80 ms-1 mb-1">Enrollment Status:</p>
+            <p className="opacity-80 ms-1 mb-2">Enrollment Status:</p>
           </Label>
           <Select
             onValueChange={setEnrollmentStatus}

@@ -1,4 +1,4 @@
-import CategoriesSelect from "@/components/courses/CategoriesSelect";
+import CategoriesSelect from "@/components/forms/CategoriesSelect";
 import { useAuth } from "@/context/AuthContext";
 import { useAsync } from "@/hooks/useAsync";
 import { COURSE_SORT_OPTIONS } from "@/lib/constants";
@@ -6,18 +6,18 @@ import { getCourses } from "@/services/courses";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { toast } from "sonner";
-import TagsSelect from "@/components/courses/TagsSelect";
-import FilterIconSvg from "@/components/ui/FilterIconSvg";
-import SortIconSvg from "@/components/ui/SortIconSvg";
+import TagsSelect from "@/components/forms/TagsSelect";
+import FilterIconSvg from "@/components/ui/custom/FilterIconSvg";
+import SortIconSvg from "@/components/ui/custom/SortIconSvg";
 import { CourseList } from "@/components/courses/CourseList";
-import SearchBar from "@/components/courses/SearchBar";
-import MyDialog from "@/components/courses/MyDialog";
+import SearchBar from "@/components/ui/custom/SearchBar";
+import MyDialog from "@/components/ui/custom/MyDialog";
 import {
   SortDirectionSelect,
   SortOptionSelect,
-} from "@/components/courses/SortOptionSelect";
-import MyPagination from "@/components/courses/MyPagination";
-
+} from "@/components/forms/SortOptionSelect";
+import MyPagination from "@/components/ui/custom/MyPagination";
+import TutorsSelect from "@/components/forms/TutorsSelect";
 
 export default function DiscoverNewPage() {
   const { user } = useAuth();
@@ -31,6 +31,7 @@ function DiscoverPage() {
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [tagIds, setTagIds] = useState<string[]>([]);
+  const [tutorProfileId, setTutorProfileId] = useState("");
   // sorting
   const [sortBy, setSortBy] = useState(COURSE_SORT_OPTIONS[0]?.value || "");
   const [sortAsc, setSortAsc] = useState(true);
@@ -42,6 +43,7 @@ function DiscoverPage() {
     title,
     categoryId,
     tagIds,
+    tutorProfileId,
     sortBy,
     sortAsc,
     limit,
@@ -68,6 +70,7 @@ function DiscoverPage() {
           onClear={() => {
             setCategoryId("");
             setTagIds([]);
+            setTutorProfileId("");
           }}
         >
           <CategoriesSelect
@@ -75,6 +78,7 @@ function DiscoverPage() {
             setCategoryId={setCategoryId}
           />
           <TagsSelect tagIds={tagIds} setTagIds={setTagIds} />
+          <TutorsSelect tutorProfileId={tutorProfileId} setTutorProfileId={setTutorProfileId} />
         </MyDialog>
 
         {/* Sorting Dialog */}
@@ -98,9 +102,13 @@ function DiscoverPage() {
       <CourseList data={data?.items} />
 
       {/* pagination */}
-      {data && data.items.length > 0 && <MyPagination MAX_PAGES={Math.ceil(data.total / limit)} page={page} setPage={setPage} />}
+      {data && data.items.length > 0 && (
+        <MyPagination
+          MAX_PAGES={Math.ceil(data.total / limit)}
+          page={page}
+          setPage={setPage}
+        />
+      )}
     </main>
   );
 }
-
-

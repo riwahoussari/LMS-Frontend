@@ -1,9 +1,9 @@
-import { Input } from "../ui/input";
+import { Input } from "../input";
 
 export default function SearchBar({
   value,
   onChange,
-  placeholder = ""
+  placeholder = "",
 }: {
   value: string;
   onChange: (v: string) => void;

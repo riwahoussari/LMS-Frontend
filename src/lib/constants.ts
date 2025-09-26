@@ -14,6 +14,41 @@ export type PagedResult<T> = {
   offset?: number;
 };
 
+type FiltersType = {
+  sortBy?: string;
+  sortAsc?: boolean;
+  limit?: number;
+  offset?: number;
+};
+export interface UserFitlersType extends FiltersType {
+  role?: Role;
+  fullName?: string;
+  email?: string;
+}
+
+export type UserDto = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  roleName: Role;
+  birthdate?: string;
+  suspended?: boolean;
+  studentProfile?: StudentProfileDto;
+  tutorProfile?: TutorProfileDto;
+};
+
+export type StudentProfileDto = {
+  id: string;
+  major: string;
+};
+
+export type TutorProfileDto = {
+  id: string;
+  bio: string;
+  expertise: string;
+};
+
 export type CourseStatus = "Draft" | "Published" | "Archived";
 
 export type TSelectOption = { value: string; text: string };
@@ -24,17 +59,13 @@ export const COURSE_SORT_OPTIONS: TSelectOption[] = [
 ];
 export type CourseSortOption = "Enrollments" | "SpotsLeft" | "Title";
 
-export type CourseFitlersType = {
+export interface CourseFitlersType extends FiltersType {
   title?: string;
   status?: CourseStatus;
   categoryId?: string;
   tutorProfileId?: string;
   tagIds?: string[];
-  sortBy?: string;
-  sortAsc?: boolean;
-  limit?: number;
-  offset?: number;
-};
+}
 
 export type CourseDto = {
   id: string;
@@ -44,7 +75,7 @@ export type CourseDto = {
   spotsLeft?: number;
   isUserEnrolled?: boolean;
   status?: CourseStatus;
-  tutorProfiles?: TutorProfileDto[];
+  tutorProfiles?: TutorExtendedProfileDto[];
   category: CategoryDto;
   schedule: ScheduleDto;
   tags?: TagDto[];
@@ -57,7 +88,7 @@ export type PartialCourseDto = {
   title: string;
 };
 
-export type TutorProfileDto = {
+export type TutorExtendedProfileDto = {
   id: string;
   bio: string;
   expertise: string;

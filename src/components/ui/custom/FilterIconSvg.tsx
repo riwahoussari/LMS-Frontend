@@ -9,7 +9,7 @@ export default function FilterIconSvg(props: SVGProps<SVGSVGElement>) {
       {...props}
     >
       <path
-        stroke="#000"
+        stroke="var(--color-foreground)"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
