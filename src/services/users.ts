@@ -11,3 +11,9 @@ export async function getUsers(
 
   return res.data;
 }
+
+export async function getUser(id: string) {
+  const res = await api.get<UserDto>(`/users/${id}`);
+
+  return res.data;
+}

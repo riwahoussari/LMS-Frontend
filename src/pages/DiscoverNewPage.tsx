@@ -36,7 +36,7 @@ function DiscoverPage() {
   const [sortBy, setSortBy] = useState(COURSE_SORT_OPTIONS[0]?.value || "");
   const [sortAsc, setSortAsc] = useState(true);
   // pagination
-  const limit = 1;
+  const limit = 2;
   const [page, setPage] = useState(0);
 
   const query = {
