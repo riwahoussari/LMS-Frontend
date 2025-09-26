@@ -5,11 +5,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useAsync } from "@/hooks/useAsync";
 import { getCategories } from "@/services/categories";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
+import { useCachedAsync } from "@/hooks/useCachedAsync";
 
 type Props = {
   categoryId: string;
@@ -17,14 +17,14 @@ type Props = {
 };
 
 export default function CategoriesSelect({ categoryId, setCategoryId }: Props) {
-  const { data: categories, error: catError } = useAsync(getCategories, [], []);
+  const { data: categories, error } = useCachedAsync("getCategories", getCategories, [], []);
 
   // Show toast if there's an error
   useEffect(() => {
-    if (catError) {
+    if (error) {
       toast.error(`Failed to load categories`);
     }
-  }, [catError]);
+  }, [error]);
 
   return (
     <div>
@@ -36,7 +36,6 @@ export default function CategoriesSelect({ categoryId, setCategoryId }: Props) {
           <SelectValue placeholder="Category" defaultValue={categoryId} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All</SelectItem>
           {categories &&
             categories.map((cat) => (
               <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>

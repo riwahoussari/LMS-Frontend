@@ -9,12 +9,25 @@ export const ROLES = {
 
 export type CourseStatus = "Draft" | "Published" | "Archived";
 
-type TSelectOption = { value: string; text: string };
+export type TSelectOption = { value: string; text: string };
 export const COURSE_SORT_OPTIONS: TSelectOption[] = [
   { value: "Enrollments", text: "Enrollments" },
   { value: "SpotsLeft", text: "Spots Left" },
   { value: "Title", text: "Title" },
 ];
+export type CourseSortOption = "Enrollments" | "SpotsLeft" | "Title";
+
+export type CourseFitlersType = {
+  title?: string;
+  status?: CourseStatus;
+  categoryId?: string;
+  tutorProfileId?: string;
+  tagIds?: string[];
+  sortBy?: string;
+  sortAsc?: boolean;
+  limit?: number;
+  offset?: number;
+}
 
 export type CourseDto = {
   id: string;

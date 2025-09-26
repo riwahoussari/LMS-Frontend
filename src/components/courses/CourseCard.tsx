@@ -36,7 +36,7 @@ export default function CourseCard({
   }
 
   return (
-    <div className="w-2xl rounded-md shadow-md border p-6">
+    <div className="w-xl rounded-md shadow-md border p-6">
       {/* row 1 */}
       <div>
         {/* category & status */}
