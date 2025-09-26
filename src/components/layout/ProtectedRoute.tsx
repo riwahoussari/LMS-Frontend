@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import LoadingDiv from "./LoadingDiv";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -20,7 +21,7 @@ export default function ProtectedRoute({
 
   if (!isAuth) return <Navigate to="/login" replace />;
   if (roles && (!user || !roles.includes(user.role)))
-    return <Navigate to="/unauthorized" replace />;
+    return <NotFoundPage />;
 
   return <>{children}</>;
 }

@@ -11,6 +11,8 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import { ROLES } from "./lib/constants";
 import Navbar from "./components/layout/Navbar";
+import DiscoverNewPage from "./pages/DiscoverNewPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,14 +27,27 @@ const router = createBrowserRouter(
       <Route
         index
         element={
-          // <ProtectedRoute roles={[ROLES.STUDENT, ROLES.TUTOR]}>
+          <ProtectedRoute>
             <HomePage />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         }
       />
 
+      <Route
+        path="/discover"
+        element={
+          <ProtectedRoute roles={[ROLES.STUDENT, ROLES.TUTOR]}>
+            <DiscoverNewPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Auth Pages */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+
+      {/* not found page */}
+      <Route path="*" element={<NotFoundPage />} />
     </Route>
   )
 );
