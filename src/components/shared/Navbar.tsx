@@ -9,10 +9,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import BurgerMenuSvg from "@/components/ui/custom/BurgerMenuSvg";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useCachedAsync } from "@/hooks/useCachedAsync";
 
 export default function Navbar() {
   const { user, isLoading } = useAuth();
@@ -64,6 +64,12 @@ export default function Navbar() {
 function DropdownNavMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
+  const {clearAllCache} = useCachedAsync("", async () => null, [], [], {enabled: false})
+
+  const onLoggout = () => {
+    logout();
+    clearAllCache();
+  }
 
   return (
     <DropdownMenu>
@@ -91,7 +97,7 @@ function DropdownNavMenu() {
         )}
         {user && (
           <DropdownMenuItem
-            onClick={logout}
+            onClick={onLoggout}
             className="cursor-pointer text-red-500"
           >
             Logout

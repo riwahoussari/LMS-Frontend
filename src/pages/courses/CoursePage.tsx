@@ -1,0 +1,106 @@
+import { useParams, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, AlertCircle } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useCachedAsync } from "@/hooks/useCachedAsync";
+import { getCourse } from "@/services/courses";
+
+import HeaderSection from "@/components/courses/CoursePageSections/HeaderSection";
+import ScheduleSection from "@/components/courses/CoursePageSections/ScheduleSection";
+import EnrollmentSection from "@/components/courses/CoursePageSections/EnrollmentSection";
+import PrerequisitesSection from "@/components/courses/CoursePageSections/PrerequisitesSection";
+import EnrolledStudentsSection from "@/components/courses/CoursePageSections/EnrolledStudentsSection";
+import TutorsSection from "@/components/courses/CoursePageSections/TutorsSection";
+import TagsSection from "@/components/courses/CoursePageSections/TagsSection";
+import CourseInfoSection from "@/components/courses/CoursePageSections/CourseInfoSection";
+import { useAuth } from "@/context/AuthContext";
+import { ROLES } from "@/lib/constants";
+
+export default function CoursePage() {
+  const { courseId } = useParams<{ courseId: string }>();
+  const navigate = useNavigate();
+
+  const { user } = useAuth();
+
+  const {
+    data: course,
+    error,
+    loading,
+  } = useCachedAsync(
+    `course-${courseId}`,
+    getCourse,
+    [courseId || ""],
+    [courseId]
+  );
+
+  var isTutor = user && user.role === ROLES.TUTOR;
+  var isAssignedTutor =
+    isTutor && course?.tutorProfiles?.some((tp) => tp.userId === user?.sub);
+  var isAdmin = user && user.role === ROLES.ADMIN;
+  const isStudent = user?.role == ROLES.STUDENT;
+
+  if (loading) {
+    return (
+      <div className="container mx-auto p-6">
+        <div className="space-y-6">
+          <Skeleton className="h-8 w-1/4" />
+          <Skeleton className="h-32 " />
+          <Skeleton className="h-64 " />
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !course) {
+    return (
+      <div className="container mx-auto p-6">
+        <Card>
+          <CardContent className="flex flex-col items-center justify-center py-12">
+            <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
+            <h2 className="text-xl font-semibold mb-2">Course Not Found</h2>
+            <p className="text-muted-foreground mb-4">
+              The course you're looking for doesn't exist or couldn't be loaded.
+            </p>
+            <Button onClick={() => navigate("/")} variant="outline">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Go Home
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto p-6 space-y-6">
+      {/* Back Button */}
+      <Button onClick={() => navigate(-1)} variant="ghost" className="mb-4">
+        <ArrowLeft className="h-4 w-4 mr-2" />
+        Back
+      </Button>
+
+      {/* Header */}
+      <HeaderSection course={course} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main Content */}
+        <div className="lg:col-span-2 space-y-6">
+          {isStudent && <EnrollmentSection course={course} />}
+          <ScheduleSection course={course} />
+          <PrerequisitesSection course={course} />
+          {(isAssignedTutor || isAdmin) && (
+            <EnrolledStudentsSection course={course} />
+          )}
+        </div>
+
+        {/* Sidebar */}
+        <div className="space-y-6">
+          <TutorsSection course={course} />
+          <TagsSection course={course} />
+          <CourseInfoSection course={course} />
+        </div>
+      </div>
+    </div>
+  );
+}

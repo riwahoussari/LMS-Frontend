@@ -10,7 +10,7 @@ type Props = {
   setTagIds: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-export default function TagsSelect({ tagIds, setTagIds }: Props) {
+export default function TagsMultiSelect({ tagIds, setTagIds }: Props) {
   const { data: tags, error } = useCachedAsync("getTags", getTags, [], []);
 
   // Show toast if there's an error
@@ -20,14 +20,20 @@ export default function TagsSelect({ tagIds, setTagIds }: Props) {
     }
   }, [error]);
 
-
   return (
     <div>
       <Label>
-        <p className="opacity-80 ms-1 mb-2">Tags:</p>
+        <p className="opacity-80 ms-1 mb-2">Tags</p>
       </Label>
       <MultiSelect
-        options={tags ? tags.map(tag => {return {value: tag.id, label: tag.name}}) : []}
+        hideSelectAll
+        options={
+          tags
+            ? tags.map((tag) => {
+                return { value: tag.id, label: tag.name };
+              })
+            : []
+        }
         value={tagIds}
         onValueChange={setTagIds}
         placeholder="Choose tags..."

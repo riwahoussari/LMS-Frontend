@@ -29,7 +29,7 @@ export default function CategoriesSelect({ categoryId, setCategoryId }: Props) {
   return (
     <div>
       <Label>
-        <p className="opacity-80 ms-1 mb-2">Category:</p>
+        <p className="opacity-80 ms-1 mb-2">Category</p>
       </Label>
       <Select onValueChange={setCategoryId} defaultValue={categoryId}>
         <SelectTrigger>

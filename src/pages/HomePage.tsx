@@ -5,7 +5,7 @@ import {
   ROLES,
   type EnrollmentDto,
 } from "@/lib/constants";
-import NotFoundPage from "./NotFoundPage";
+import NotFoundPage from "./auth/NotFoundPage";
 import { useEffect, useState } from "react";
 import { useAsync } from "@/hooks/useAsync";
 import { toast } from "sonner";
@@ -26,7 +26,7 @@ import SearchBar from "@/components/ui/custom/SearchBar";
 import MyDialog from "@/components/ui/custom/MyDialog";
 import FilterIconSvg from "@/components/ui/custom/FilterIconSvg";
 import CategoriesSelect from "@/components/forms/CategoriesSelect";
-import TagsSelect from "@/components/forms/TagsSelect";
+import TagsMultiSelect from "@/components/forms/TagsMultiSelect";
 import SortIconSvg from "@/components/ui/custom/SortIconSvg";
 import {
   SortDirectionSelect,
@@ -36,6 +36,7 @@ import { CourseList } from "@/components/courses/CourseList";
 import MyPagination from "@/components/ui/custom/MyPagination";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
 import { getUser } from "@/services/users";
+import PageTitle from "@/components/ui/custom/PageTitle";
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -78,6 +79,7 @@ function TutorHomePage({ userId }: { userId: string }) {
   if (!user?.tutorProfile) return <NotFoundPage />;
   return (
     <main>
+      <PageTitle>My Courses</PageTitle>
       <div className="flex items-end flex-wrap gap-4">
         <SearchBar
           placeholder="Search by title"
@@ -97,7 +99,7 @@ function TutorHomePage({ userId }: { userId: string }) {
             categoryId={categoryId}
             setCategoryId={setCategoryId}
           />
-          <TagsSelect tagIds={tagIds} setTagIds={setTagIds} />
+          <TagsMultiSelect tagIds={tagIds} setTagIds={setTagIds} />
         </MyDialog>
 
         {/* Sorting Dialog */}
@@ -118,7 +120,7 @@ function TutorHomePage({ userId }: { userId: string }) {
       </div>
 
       {/* cards */}
-      <CourseList data={data?.items} />
+      <CourseList showStatus data={data?.items} />
 
       {/* pagination */}
       {data && data.items.length > 0 && (
@@ -136,7 +138,8 @@ function StudentHomePage() {
   const [enrollmentStatus, setEnrollmentStatus] = useState(" ");
 
   // fetch posts
-  const { data, error } = useAsync(
+  const { data, error } = useCachedAsync(
+    `getMy${enrollmentStatus}Enrollments`,
     getMyEnrollments,
     [{ enrollmentStatus }],
     [enrollmentStatus]
@@ -151,7 +154,7 @@ function StudentHomePage() {
 
   return (
     <main>
-      <h1 className="font-semibold text-3xl">My Enrollments</h1>
+      <PageTitle>My Enrollments</PageTitle>
       <div>
         {/* Enrollment Status Tabs  */}
 

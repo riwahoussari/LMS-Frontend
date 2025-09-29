@@ -8,7 +8,7 @@ export default function MyDialog({
   icon,
   children,
 }: {
-  onClear: () => void;
+  onClear?: () => void;
   icon: ReactNode;
   children: ReactNode;
 }) {
@@ -35,15 +35,17 @@ export default function MyDialog({
           >
             OK
           </Button>
-          <Button
-            onClick={() => {
-              onClear();
-              setOpen(false);
-            }}
-            variant="outline"
-          >
-            Clear Filters
-          </Button>
+          {onClear && (
+            <Button
+              onClick={() => {
+                onClear();
+                setOpen(false);
+              }}
+              variant="outline"
+            >
+              Clear Filters
+            </Button>
+          )}
         </div>
       </DialogContent>
     </Dialog>

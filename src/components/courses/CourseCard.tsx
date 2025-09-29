@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import { Skeleton } from "../ui/skeleton";
-import { ROLES, type CourseDto } from "@/lib/constants";
+import { type CourseDto } from "@/lib/constants";
 import { formatDate, getRoundedWeeksBetween } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { useAuth } from "@/context/AuthContext";
-import { enrollIntoCourse } from "@/services/courses";
-import { toast } from "sonner";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
+import { Badge } from "../ui/badge";
+import { Check, CheckCheck, CircleCheck } from "lucide-react";
 
 export default function CourseCard({
   id,
@@ -21,20 +20,6 @@ export default function CourseCard({
   schedule,
   tutorProfiles,
 }: CourseDto) {
-  const { user } = useAuth();
-  const [userEnrolled, setUserEnrolled] = useState(isUserEnrolled);
-
-  async function handleClick() {
-    try {
-      await enrollIntoCourse({ courseId: id });
-      setUserEnrolled(true);
-    } catch (err) {
-      console.error("Failed to enroll into course", err);
-      toast.error("Failed to enroll you into this course.");
-      setUserEnrolled(false);
-    }
-  }
-
   return (
     <div className="w-xl rounded-md shadow-md border p-6">
       {/* row 1 */}
@@ -62,6 +47,11 @@ export default function CourseCard({
               </span>
             </p>
           )}
+          {isUserEnrolled === true && (
+            <Badge className="font-normal text-sm flex items-center gap-1.5" variant={"outline"}>
+              <CircleCheck className="w-4! h-4!" />
+              Enrolled</Badge>
+          )}
         </div>
 
         {/* title & description */}
@@ -86,18 +76,18 @@ export default function CourseCard({
 
         {/* enroll & spots left */}
         <div>
-          {user?.role == ROLES.STUDENT && (
+          <Link to={`/courses/${id}`}>
             <Button
-              disabled={(!!maxCapacity && spotsLeft == 0) || userEnrolled}
               className="rounded-ful text-lg cursor-pointer"
               size="lg"
-              onClick={handleClick}
+              type="button"
             >
-              {userEnrolled ? "Enrolled" : "Enroll"}
+              View Course
             </Button>
-          )}
+          </Link>
+
           {!!maxCapacity && (
-            <p className="text-sm opacity-50 text-center mb-1">
+            <p className="text-sm opacity-50 text-end pe-2 mt-1">
               {spotsLeft} spots left
             </p>
           )}
@@ -167,4 +157,3 @@ export function SkeletonCourseCard() {
     </div>
   );
 }
-

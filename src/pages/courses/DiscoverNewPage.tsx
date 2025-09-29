@@ -6,7 +6,7 @@ import { getCourses } from "@/services/courses";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { toast } from "sonner";
-import TagsSelect from "@/components/forms/TagsSelect";
+import TagsMultiSelect from "@/components/forms/TagsMultiSelect";
 import FilterIconSvg from "@/components/ui/custom/FilterIconSvg";
 import SortIconSvg from "@/components/ui/custom/SortIconSvg";
 import { CourseList } from "@/components/courses/CourseList";
@@ -77,8 +77,11 @@ function DiscoverPage() {
             categoryId={categoryId}
             setCategoryId={setCategoryId}
           />
-          <TagsSelect tagIds={tagIds} setTagIds={setTagIds} />
-          <TutorsSelect tutorProfileId={tutorProfileId} setTutorProfileId={setTutorProfileId} />
+          <TagsMultiSelect tagIds={tagIds} setTagIds={setTagIds} />
+          <TutorsSelect
+            tutorProfileId={tutorProfileId}
+            setTutorProfileId={setTutorProfileId}
+          />
         </MyDialog>
 
         {/* Sorting Dialog */}

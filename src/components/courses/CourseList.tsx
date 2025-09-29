@@ -2,7 +2,7 @@ import type { CourseDto } from "@/lib/constants";
 import CourseCard, { SkeletonCourseCard } from "./CourseCard";
 
 
-export function CourseList({ data }: { data?: CourseDto[] | null }) {
+export function CourseList({ data, showStatus = false }: { data?: CourseDto[] | null, showStatus?: boolean }) {
   if (!data) {
     return (
       <div className="flex flex-wrap justify-start gap-16">
@@ -20,7 +20,7 @@ export function CourseList({ data }: { data?: CourseDto[] | null }) {
           <p>No courses found.</p>
         ) : (
           data.map((course) => (
-            <CourseCard key={course.id} {...course} status={undefined} />
+            <CourseCard key={course.id} {...course} status={showStatus ? course.status : undefined} />
           ))
         )}
       </div>

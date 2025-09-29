@@ -14,7 +14,7 @@ export function SortOptionSelect({
   return (
     <div>
       <Label>
-        <p className="opacity-80 ms-1 mb-1">Sort:</p>
+        <p className="opacity-80 ms-1 mb-1">Sort</p>
       </Label>
       <Select value={sortBy} onValueChange={setSortBy}>
         <SelectTrigger>
@@ -42,7 +42,7 @@ export function SortDirectionSelect({
   return (
     <div>
       <Label>
-        <p className="opacity-80 ms-1 mb-1">Sort Direction:</p>
+        <p className="opacity-80 ms-1 mb-1">Sort Direction</p>
       </Label>
       <Select
         value={sortAsc ? "true" : "false"}

@@ -38,6 +38,13 @@ export type UserDto = {
   tutorProfile?: TutorProfileDto;
 };
 
+export type PartialUserDto = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 export type StudentProfileDto = {
   id: string;
   major: string;
@@ -103,9 +110,23 @@ export type CategoryDto = {
   name: string;
 };
 
+export type CategoryStatsDto = {
+  id: string;
+  name: string;
+  totalCourses: number;
+  totalEnrollments: number;
+};
+
 export type TagDto = {
   id: string;
   name: string;
+};
+
+export type TagStatsDto = {
+  id: string;
+  name: string;
+  totalCourses: number;
+  totalEnrollments: number;
 };
 
 export type PrerequisiteDto = {
@@ -120,11 +141,42 @@ export type ScheduleDto = {
 };
 
 export type ScheduleSessionDto = {
-  datOfWeek: string;
+  dayOfWeek: string;
   startTime: string;
   endTime: string;
   location: string;
 };
+
+export interface CreateCourseDto {
+  title: string;
+  description: string;
+  maxCapacity?: number;
+  categoryId: string;
+  schedule: CreateScheduleDto;
+  tagIds: string[];
+  prerequisiteIds: string[];
+}
+type CreateScheduleDto = {
+  startDate: string;
+  endDate: string;
+  sessions: CreateScheduleSessionDto[];
+};
+type CreateScheduleSessionDto = {
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+  location: string;
+};
+
+export const DAYS_OF_WEEK = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 export type EnrollmentStatus =
   | "Pending"
@@ -141,12 +193,27 @@ export const ENROLLMENT_STATUS_LIST = [
   "Suspended",
   "Dropped",
 ];
+export const ENROLLMENT_STATUSES = {
+  PENDING: "Pending",
+  ACTIVE: "Active",
+  PASSED: "Passed",
+  FAILED: "Failed",
+  SUSPENDED: "Suspended",
+  DROPPED: "Dropped",
+};
 
 export type EnrollmentDto = {
   course: PartialCourseDto;
   userId: string;
   status: EnrollmentStatus;
 };
+
+export type ExtendedEnrollmentDto = {
+  course: PartialCourseDto;
+  status: EnrollmentStatus;
+  user: PartialUserDto;
+  studentProfile: StudentProfileDto;
+}
 
 export type RegisterDto = {
   email: string;
@@ -181,6 +248,7 @@ const STUDENT_LINKS: navLink[] = [
 const TUTOR_LINKS: navLink[] = [
   { text: "My Courses", link: "/" },
   { text: "Discover New", link: "/discover" },
+  { text: "Create Course", link: "/create-course" },
 ];
 
 const ADMIN_LINKS: navLink[] = [

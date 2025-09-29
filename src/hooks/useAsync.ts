@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 export function useAsync<T, A extends any[]>(
   fn: (...args: A) => Promise<T>,
   args: A,
-  deps: any[] = []
+  deps: any[] = [],
+  options?: { enabled?: boolean }
 ) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null);
 
   useEffect(() => {
+    if (options?.enabled === false) return; // Do nothing of disabled
+
     let cancelled = false;
     setLoading(true);
     setError(null);
@@ -28,7 +31,7 @@ export function useAsync<T, A extends any[]>(
     return () => {
       cancelled = true;
     };
-  }, deps);
+  }, [ options?.enabled, ...deps]);
 
   return { data, loading, error };
 }

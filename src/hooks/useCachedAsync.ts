@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { clearCacheKey, clearAllCache, getCache, setCache } from "@/lib/cache"; 
 
-const cache: Record<string, any> = {};
 
 type AsyncFn<TArgs extends any[], TResult> = (
   ...args: TArgs
@@ -10,15 +10,18 @@ export function useCachedAsync<TArgs extends any[], TResult>(
   cacheKey: string,
   fn: AsyncFn<TArgs, TResult>,
   args: TArgs,
-  deps: any[] = []
+  deps: any[] = [],
+  options?: { enabled?: boolean }
 ) {
-  const [data, setData] = useState<TResult | null>(cache[cacheKey] ?? null);
+  const [data, setData] = useState<TResult | null>(getCache(cacheKey) ?? null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (cache[cacheKey]) {
-      setData(cache[cacheKey]);
+    if (options?.enabled === false) return; // Do nothing of disabled
+
+    if (getCache(cacheKey)) {
+      setData(getCache(cacheKey));
       return;
     }
 
@@ -27,7 +30,7 @@ export function useCachedAsync<TArgs extends any[], TResult>(
     fn(...args)
       .then((result) => {
         if (!cancelled) {
-          cache[cacheKey] = result;
+          setCache(cacheKey, result);
           setData(result);
         }
       })
@@ -42,7 +45,7 @@ export function useCachedAsync<TArgs extends any[], TResult>(
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cacheKey, ...deps]);
+  }, [cacheKey, options?.enabled, ...deps]);
 
-  return { data, error, loading };
+  return { data, error, loading, clearCacheKey, clearAllCache };
 }
