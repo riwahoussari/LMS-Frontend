@@ -2,10 +2,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
-import { ROLES, type CourseDto } from "@/lib/constants";
+import { COURSE_STATUSES, ROLES, type CourseDto } from "@/lib/constants";
 import { getCourseStatusColor, getCourseStatusIcon } from "@/lib/courseUtils";
 import { format } from "date-fns";
 import { BookOpen, Calendar, Users } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function HeaderSection({ course }: { course: CourseDto }) {
   const { user } = useAuth();
@@ -60,8 +61,10 @@ export default function HeaderSection({ course }: { course: CourseDto }) {
             )}
 
             {/* Edit Button */}
-            {isAssignedTutor && (
-              <Button className="cursor-pointer">Edit Course</Button>
+            {isAssignedTutor && course.status !== COURSE_STATUSES.ARCHIVED && (
+              <Link to={`/courses/${course.id}/edit`}>
+                <Button className="cursor-pointer">Edit Course</Button>
+              </Link>
             )}
           </div>
         </div>

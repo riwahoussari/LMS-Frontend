@@ -101,3 +101,4 @@ export const dateHasPassed = (date: string): boolean => {
 
   return targetDate < today
 }
+

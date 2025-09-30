@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getCategories } from "@/services/categories";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
@@ -17,7 +17,12 @@ type Props = {
 };
 
 export default function CategoriesSelect({ categoryId, setCategoryId }: Props) {
-  const { data: categories, error } = useCachedAsync("getCategories", getCategories, [], []);
+  const { data: categories, error } = useCachedAsync(
+    "getCategories",
+    getCategories,
+    [],
+    []
+  );
 
   // Show toast if there's an error
   useEffect(() => {
@@ -31,14 +36,19 @@ export default function CategoriesSelect({ categoryId, setCategoryId }: Props) {
       <Label>
         <p className="opacity-80 ms-1 mb-2">Category</p>
       </Label>
-      <Select onValueChange={setCategoryId} defaultValue={categoryId}>
+      <Select
+        onValueChange={(v) => categories && setCategoryId(v)}
+        value={categoryId}
+      >
         <SelectTrigger>
-          <SelectValue placeholder="Category" defaultValue={categoryId} />
+          <SelectValue placeholder="Category" />
         </SelectTrigger>
         <SelectContent>
           {categories &&
             categories.map((cat) => (
-              <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
+              <SelectItem key={cat.id} value={cat.id}>
+                {cat.name}
+              </SelectItem>
             ))}
         </SelectContent>
       </Select>

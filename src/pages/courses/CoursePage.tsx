@@ -18,6 +18,8 @@ import { useAuth } from "@/context/AuthContext";
 import { ROLES, type CourseDto } from "@/lib/constants";
 import CourseStatusSection from "@/components/courses/CoursePageSections/CourseStatusSection";
 import { useEffect, useState } from "react";
+import BackButton from "@/components/shared/BackButton";
+import ErrorCard from "@/components/shared/ErrorCard";
 
 export default function CoursePage() {
   const { courseId } = useParams<{ courseId: string }>();
@@ -57,31 +59,17 @@ export default function CoursePage() {
 
   if (error || !course) {
     return (
-      <div className="container mx-auto p-6">
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
-            <h2 className="text-xl font-semibold mb-2">Course Not Found</h2>
-            <p className="text-muted-foreground mb-4">
-              The course you're looking for doesn't exist or couldn't be loaded.
-            </p>
-            <Button onClick={() => navigate("/")} variant="outline">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Go Home
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+      <ErrorCard
+        title="Course Not Found."
+        message="The course you're looking for doesn't exist or couldn't be loaded."
+      />
     );
   }
 
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* Back Button */}
-      <Button onClick={() => navigate(-1)} variant="ghost" className="mb-4">
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back
-      </Button>
+      <BackButton />
 
       {/* Header */}
       <HeaderSection course={course} />

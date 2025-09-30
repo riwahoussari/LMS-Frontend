@@ -161,6 +161,15 @@ export interface CreateCourseDto {
   tagIds: string[];
   prerequisiteIds: string[];
 }
+export interface UpdateCourseDto {
+  title: string;
+  description: string;
+  maxCapacity?: number;
+  categoryId: string;
+  schedule: CreateScheduleDto;
+  tagIds: string[];
+  prerequisiteIds: string[];
+}
 type CreateScheduleDto = {
   startDate: string;
   endDate: string;

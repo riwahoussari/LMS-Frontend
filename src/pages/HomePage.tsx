@@ -38,6 +38,7 @@ import { useCachedAsync } from "@/hooks/useCachedAsync";
 import { getUser } from "@/services/users";
 import PageTitle from "@/components/ui/custom/PageTitle";
 import { Navigate } from "react-router-dom";
+import LoadingDiv from "@/components/shared/LoadingDiv";
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -49,7 +50,7 @@ export default function HomePage() {
 }
 
 function TutorHomePage({ userId }: { userId: string }) {
-  const { data: user } = useCachedAsync("getUser", getUser, [userId], []);
+  const { data: user, loading } = useCachedAsync("getUser", getUser, [userId], []);
 
   // filters
   const [title, setTitle] = useState("");
@@ -78,6 +79,7 @@ function TutorHomePage({ userId }: { userId: string }) {
     if (error) toast.error("Failed to load courses");
   }, [error]);
 
+  if (loading) return <LoadingDiv />
   if (!user?.tutorProfile) return <NotFoundPage />;
   return (
     <main>

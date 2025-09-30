@@ -34,6 +34,7 @@ export default function TagsMultiSelect({ tagIds, setTagIds }: Props) {
               })
             : []
         }
+        defaultValue={tags ? tagIds : undefined}
         value={tagIds}
         onValueChange={setTagIds}
         placeholder="Choose tags..."

@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { X, Search, CheckCircle, Circle } from "lucide-react";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
-import { getCourses } from "@/services/courses";
+import { getCourse, getCourses } from "@/services/courses";
 import { toast } from "sonner";
 
 interface Course {
@@ -37,7 +37,7 @@ export default function CoursesMultiSelect({
   const { data: courseList, error } = useCachedAsync(
     `getCourses-${searchValue}`,
     getCourses,
-    [{ title: searchValue, limit: 10, offset: 0 }],
+    [{ title: searchValue, limit: 1, offset: 0 }],
     [searchValue]
   );
 
@@ -57,8 +57,7 @@ export default function CoursesMultiSelect({
       removeCourse(course.id);
     } else {
       // Add course
-      onCoursesChange([...selectedCourseIds, course.id]);
-      setSelectedCourses([...selectedCourses, course]);
+      addCourse(course);
     }
   };
 
@@ -67,10 +66,52 @@ export default function CoursesMultiSelect({
     setSelectedCourses(selectedCourses.filter((c) => c.id !== courseId));
   };
 
+  const addCourse = (course: Course) => {
+    onCoursesChange([...selectedCourseIds, course.id]);
+    setSelectedCourses([...selectedCourses, course]);
+  };
+
   const clearAll = () => {
     onCoursesChange([]);
     setSelectedCourses([]);
   };
+
+  // preselect default course
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    if (done) return;
+    // start all fetch request at the same time
+    const processCourses = async () => {
+      await Promise.all(
+        selectedCourseIds.map(async (preselectedCourseId) => {
+          try {
+            // find course in already fetched (limited) courses
+            let course = courses.find((c) => c.id === preselectedCourseId);
+            // if course not already fetched => fetch it
+            if (!course) {
+              let fullCourse = await getCourse(preselectedCourseId);
+              courses.push(fullCourse);
+              course = fullCourse;
+            }
+
+            // add course to selectedCourses
+            const isSelected = selectedCourses.some((c) => c.id === course?.id);
+            if (course && !isSelected)
+              addCourse({
+                id: course.id,
+                title: course.title,
+                description: course.description,
+              });
+          } catch (err) {
+            toast.warning("Some prerequisite courses were not loaded!");
+          }
+        })
+      );
+      setDone(true);
+    };
+
+    processCourses();
+  }, [selectedCourseIds, done]);
 
   return (
     <div className="space-y-3">

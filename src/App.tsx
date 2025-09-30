@@ -18,6 +18,7 @@ import CoursePage from "./pages/courses/CoursePage";
 import CategoriesPage from "./pages/CategoriesPage";
 import TagsPage from "./pages/TagsPage";
 import PlatformAnalyticsPage from "./pages/AnalyticsPage";
+import EditCoursePage from "./pages/courses/EditCoursePage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -60,6 +61,14 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <CoursePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/courses/:courseId/edit"
+        element={
+          <ProtectedRoute roles={[ROLES.TUTOR]}>
+            <EditCoursePage />
           </ProtectedRoute>
         }
       />
