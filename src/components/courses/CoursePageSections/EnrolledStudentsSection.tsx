@@ -23,6 +23,7 @@ import {
   getCourseEnrollments,
   updateEnrollmentStatus,
 } from "@/services/enrollments";
+import axios from "axios";
 import { Users } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -143,8 +144,11 @@ function EnrolledStudentRow({
       setOptions(getEnrollmentStatusSelectOptions(value, courseEnded));
       clearCacheKey(`getCourseEnrollemts${course.id}`);
     } catch (err) {
-      console.error("Failed to update enrollment status", err);
-      toast.error("Failed to update enrollment status.");
+      if (axios.isAxiosError(err) && err.response?.data)
+        toast.error("Failed to update enrollment status.", {
+          description: err.response.data,
+        });
+      else toast.error("Failed to update enrollment status.");
       setStatus(status);
       setOptions(getEnrollmentStatusSelectOptions(status, courseEnded));
     }

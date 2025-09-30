@@ -17,6 +17,7 @@ import CreateCoursePage from "./pages/courses/CreateCoursePage";
 import CoursePage from "./pages/courses/CoursePage";
 import CategoriesPage from "./pages/CategoriesPage";
 import TagsPage from "./pages/TagsPage";
+import PlatformAnalyticsPage from "./pages/AnalyticsPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -63,9 +64,31 @@ const router = createBrowserRouter(
         }
       />
 
-      {/* Categories & Tags */}
-      <Route path="/categories" element={<ProtectedRoute roles={[ROLES.ADMIN]}><CategoriesPage /></ProtectedRoute>} />
-      <Route path="/tags" element={<ProtectedRoute roles={[ROLES.ADMIN]}><TagsPage /></ProtectedRoute>} />
+      {/* Admin Routes */}
+      <Route
+        path="/categories"
+        element={
+          <ProtectedRoute roles={[ROLES.ADMIN]}>
+            <CategoriesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/tags"
+        element={
+          <ProtectedRoute roles={[ROLES.ADMIN]}>
+            <TagsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/platfrom-analytics"
+        element={
+          <ProtectedRoute roles={[ROLES.ADMIN]}>
+            <PlatformAnalyticsPage />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Auth Pages */}
       <Route path="/login" element={<LoginPage />} />
