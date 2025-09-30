@@ -15,24 +15,27 @@ import TutorsSection from "@/components/courses/CoursePageSections/TutorsSection
 import TagsSection from "@/components/courses/CoursePageSections/TagsSection";
 import CourseInfoSection from "@/components/courses/CoursePageSections/CourseInfoSection";
 import { useAuth } from "@/context/AuthContext";
-import { ROLES } from "@/lib/constants";
+import { ROLES, type CourseDto } from "@/lib/constants";
+import CourseStatusSection from "@/components/courses/CoursePageSections/CourseStatusSection";
+import { useEffect, useState } from "react";
 
 export default function CoursePage() {
   const { courseId } = useParams<{ courseId: string }>();
   const navigate = useNavigate();
 
   const { user } = useAuth();
+  const [course, setCourse] = useState<CourseDto | null>(null);
 
-  const {
-    data: course,
-    error,
-    loading,
-  } = useCachedAsync(
-    `course-${courseId}`,
+  const { data, error, loading } = useCachedAsync(
+    `getCourse-${courseId}`,
     getCourse,
     [courseId || ""],
     [courseId]
   );
+
+  useEffect(() => {
+    setCourse(data);
+  }, [data]);
 
   var isTutor = user && user.role === ROLES.TUTOR;
   var isAssignedTutor =
@@ -96,6 +99,9 @@ export default function CoursePage() {
 
         {/* Sidebar */}
         <div className="space-y-6">
+          {(isAdmin || isAssignedTutor) && (
+            <CourseStatusSection onUpdate={setCourse} course={course} />
+          )}
           <TutorsSection course={course} />
           <TagsSection course={course} />
           <CourseInfoSection course={course} />
