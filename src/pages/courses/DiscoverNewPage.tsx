@@ -1,7 +1,7 @@
 import CategoriesSelect from "@/components/forms/CategoriesSelect";
 import { useAuth } from "@/context/AuthContext";
 import { useAsync } from "@/hooks/useAsync";
-import { COURSE_SORT_OPTIONS, ROLES, type CourseStatus } from "@/lib/constants";
+import { COURSE_SORT_OPTIONS, COURSE_STATUSES, ROLES, type CourseStatus } from "@/lib/constants";
 import { getCourses } from "@/services/courses";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
@@ -47,7 +47,7 @@ function DiscoverPage() {
 
   const query = {
     title,
-    status: isAdmin ? status : undefined,
+    status: isAdmin ? status : COURSE_STATUSES.PUBLISHED,
     categoryId,
     tagIds,
     tutorProfileId,
