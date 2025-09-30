@@ -66,6 +66,14 @@ const router = createBrowserRouter(
 
       {/* Admin Routes */}
       <Route
+        path="/courses"
+        element={
+          <ProtectedRoute roles={[ROLES.ADMIN]}>
+            <DiscoverNewPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/categories"
         element={
           <ProtectedRoute roles={[ROLES.ADMIN]}>

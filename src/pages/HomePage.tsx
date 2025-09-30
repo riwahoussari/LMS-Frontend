@@ -37,12 +37,14 @@ import MyPagination from "@/components/ui/custom/MyPagination";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
 import { getUser } from "@/services/users";
 import PageTitle from "@/components/ui/custom/PageTitle";
+import { Navigate } from "react-router-dom";
 
 export default function HomePage() {
   const { user } = useAuth();
 
   if (user?.role == ROLES.STUDENT) return <StudentHomePage />;
   if (user?.role == ROLES.TUTOR) return <TutorHomePage userId={user.sub} />;
+  if (user?.role == ROLES.ADMIN) return <Navigate to={"/courses"} />
   return <NotFoundPage />;
 }
 

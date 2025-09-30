@@ -1,7 +1,7 @@
 import CategoriesSelect from "@/components/forms/CategoriesSelect";
 import { useAuth } from "@/context/AuthContext";
 import { useAsync } from "@/hooks/useAsync";
-import { COURSE_SORT_OPTIONS } from "@/lib/constants";
+import { COURSE_SORT_OPTIONS, ROLES, type CourseStatus } from "@/lib/constants";
 import { getCourses } from "@/services/courses";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
@@ -18,6 +18,7 @@ import {
 } from "@/components/forms/SortOptionSelect";
 import MyPagination from "@/components/ui/custom/MyPagination";
 import TutorsSelect from "@/components/forms/TutorsSelect";
+import { CourseStatusSelect } from "@/components/forms/CourseStatusSelect";
 
 export default function DiscoverNewPage() {
   const { user } = useAuth();
@@ -27,8 +28,13 @@ export default function DiscoverNewPage() {
 }
 
 function DiscoverPage() {
+  // if admin show status and add status filter
+  const { user } = useAuth();
+  const isAdmin = user && user.role === ROLES.ADMIN;
+
   // filters
   const [title, setTitle] = useState("");
+  const [status, setStatus] = useState<CourseStatus>();
   const [categoryId, setCategoryId] = useState("");
   const [tagIds, setTagIds] = useState<string[]>([]);
   const [tutorProfileId, setTutorProfileId] = useState("");
@@ -41,6 +47,7 @@ function DiscoverPage() {
 
   const query = {
     title,
+    status: isAdmin ? status : undefined,
     categoryId,
     tagIds,
     tutorProfileId,
@@ -68,11 +75,15 @@ function DiscoverPage() {
         <MyDialog
           icon={<FilterIconSvg className="scale-150" />}
           onClear={() => {
+            setStatus(undefined);
             setCategoryId("");
             setTagIds([]);
             setTutorProfileId("");
           }}
         >
+          {isAdmin && (
+            <CourseStatusSelect status={status} setStatus={setStatus} />
+          )}
           <CategoriesSelect
             categoryId={categoryId}
             setCategoryId={setCategoryId}
@@ -102,7 +113,7 @@ function DiscoverPage() {
       </div>
 
       {/* cards */}
-      <CourseList data={data?.items} />
+      <CourseList data={data?.items} showStatus={isAdmin || false} />
 
       {/* pagination */}
       {data && data.items.length > 0 && (

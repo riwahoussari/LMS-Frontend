@@ -54,7 +54,7 @@ export default function Navbar() {
         </div>
 
         {/* Right profile link */}
-        <ProfilePic />
+        {user && <ProfilePic />}
       </header>
       <Outlet />
     </>
@@ -64,12 +64,14 @@ export default function Navbar() {
 function DropdownNavMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
-  const {clearAllCache} = useCachedAsync("", async () => null, [], [], {enabled: false})
+  const { clearAllCache } = useCachedAsync("", async () => null, [], [], {
+    enabled: false,
+  });
 
   const onLoggout = () => {
     logout();
     clearAllCache();
-  }
+  };
 
   return (
     <DropdownMenu>

@@ -57,6 +57,11 @@ export type TutorProfileDto = {
 };
 
 export type CourseStatus = "Draft" | "Published" | "Archived";
+export const COURSE_STATUSES: Record<string, CourseStatus> = {
+  DRAFT: "Draft",
+  PUBLISHED: "Published",
+  ARCHIVED: "Archived"
+}
 
 export type TSelectOption = { value: string; text: string };
 export const COURSE_SORT_OPTIONS: TSelectOption[] = [

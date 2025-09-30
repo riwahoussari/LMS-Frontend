@@ -5,7 +5,8 @@ import { formatDate, getRoundedWeeksBetween } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Fragment } from "react";
 import { Badge } from "../ui/badge";
-import { Check, CheckCheck, CircleCheck } from "lucide-react";
+import { CircleCheck } from "lucide-react";
+import { getCourseStatusBadgeColor } from "@/lib/courseUtils";
 
 export default function CourseCard({
   id,
@@ -16,7 +17,6 @@ export default function CourseCard({
   maxCapacity,
   spotsLeft,
   isUserEnrolled,
-  tags,
   schedule,
   tutorProfiles,
 }: CourseDto) {
@@ -30,27 +30,18 @@ export default function CourseCard({
             {category.name}
           </p>
           {status && (
-            <p className=" bg-foreground/0 text-foreground inline-block">
-              status:{" "}
-              <span
-                className="font-medium"
-                style={{
-                  color:
-                    status === "Draft"
-                      ? "orange"
-                      : status === "Archived"
-                      ? "red"
-                      : "green",
-                }}
-              >
-                {status}
-              </span>
-            </p>
+            <Badge variant={"outline"} className={getCourseStatusBadgeColor(status)}>
+              {status}
+            </Badge>
           )}
           {isUserEnrolled === true && (
-            <Badge className="font-normal text-sm flex items-center gap-1.5" variant={"outline"}>
+            <Badge
+              className="font-normal text-sm flex items-center gap-1.5"
+              variant={"outline"}
+            >
               <CircleCheck className="w-4! h-4!" />
-              Enrolled</Badge>
+              Enrolled
+            </Badge>
           )}
         </div>
 
@@ -81,6 +72,7 @@ export default function CourseCard({
               className="rounded-ful text-lg cursor-pointer"
               size="lg"
               type="button"
+              variant={"secondary"}
             >
               View Course
             </Button>

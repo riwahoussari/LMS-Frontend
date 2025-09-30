@@ -14,6 +14,19 @@ export const getCourseStatusColor = (status?: CourseStatus) => {
   }
 };
 
+export const getCourseStatusBadgeColor = (status?: CourseStatus) => {
+  switch (status) {
+    case "Published":
+      return "text-green-600 border-green-600";
+    case "Draft":
+      return "text-yellow-600 border-yellow-600";
+    case "Archived":
+      return "text-red-600 border-red-600";
+    default:
+      return "text-gray-600 border-gray-600";
+  }
+};
+
 export const getCourseStatusIcon = (status?: CourseStatus) => {
   switch (status) {
     case "Published":
