@@ -2,15 +2,28 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
-import { ENROLLMENT_STATUSES, ROLES, type CourseDto, type EnrollmentDto } from "@/lib/constants";
-import { getEnrollmentStatusColor, getEnrollmentStatusIcon } from "@/lib/courseUtils";
+import {
+  ENROLLMENT_STATUSES,
+  ROLES,
+  type CourseDto,
+  type EnrollmentDto,
+} from "@/lib/constants";
+import {
+  getEnrollmentStatusColor,
+  getEnrollmentStatusIcon,
+} from "@/lib/courseUtils";
 import { dateHasPassed } from "@/lib/utils";
-import { dropCourse, enrollIntoCourse, getMyEnrollments, reEnrollIntoCourse } from "@/services/enrollments";
+import {
+  dropCourse,
+  enrollIntoCourse,
+  getMyEnrollments,
+  reEnrollIntoCourse,
+} from "@/services/enrollments";
 import { getUser } from "@/services/users";
+import axios from "axios";
 import { ClipboardList } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
 
 export default function EnrollmentSection({ course }: { course: CourseDto }) {
   const { user } = useAuth();
@@ -34,8 +47,11 @@ export default function EnrollmentSection({ course }: { course: CourseDto }) {
       setEnrollment(res);
       clearCacheKey("getMyEnrollments");
     } catch (err) {
-      console.error("Failed to enroll into course", err);
-      toast.error("Failed to enroll you into this course.");
+      if (axios.isAxiosError(err) && err.response?.data)
+        toast.error("Failed to enroll you into this course", {
+          description: err.response.data,
+        });
+      else toast.error("Failed to enroll you into this course.");
       setIsSubmitting(false);
     } finally {
       setIsSubmitting(false);

@@ -189,7 +189,7 @@ export default function CreateCoursePage() {
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
       let newCourse = await createCourse(data as CreateCourseDto);
-      navigate(`/courses/${newCourse.id}`);
+      navigate(`/courses/${newCourse.id}`, {replace: true});
     } catch (error) {
       console.log(error);
       let errorMessage = "Something went wrong. Please try again.";
