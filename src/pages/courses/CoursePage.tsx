@@ -89,7 +89,7 @@ export default function CoursePage() {
           {(isAdmin || isAssignedTutor) && (
             <CourseStatusSection onUpdate={setCourse} course={course} />
           )}
-          <TutorsSection course={course} />
+          <TutorsSection isAssignedTutor={isAssignedTutor} course={course} />
           <TagsSection course={course} />
           <CourseInfoSection course={course} />
         </div>

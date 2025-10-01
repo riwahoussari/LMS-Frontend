@@ -21,8 +21,8 @@ import ErrorCard from "@/components/shared/ErrorCard";
 import LoadingDiv from "@/components/shared/LoadingDiv";
 import { ROLES, type UpdateUserDto, type UserDto } from "@/lib/constants";
 import NotFoundPage from "../auth/NotFoundPage";
-import { StudentEnrollments, TutorCourses } from "../HomePage";
-import PageTitle from "@/components/ui/custom/PageTitle";
+import StudentEnrollments from "@/components/enrollments/StudentEnrollments";
+import TutorCourses from "@/components/courses/TutorCourses";
 
 export default function UserPage() {
   const { userId: requestedId } = useParams();

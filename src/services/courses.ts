@@ -40,6 +40,16 @@ export async function publishCourse(id: string): Promise<CourseDto> {
   return res.data;
 }
 
+export async function assignTutor(courseId: string, {tutorId}: {tutorId: string}): Promise<CourseDto>{
+  const res = await api.post<CourseDto>(`/courses/${courseId}/tutors`, {tutorId});
+  return res.data;
+}
+
+export async function unassignTutor(courseId: string, {tutorId}: {tutorId: string}): Promise<CourseDto>{
+  const res = await api.delete<CourseDto>(`/courses/${courseId}/tutors/${tutorId}`);
+  return res.data;
+}
+
 // delete
 export async function archiveCourse(id: string): Promise<CourseDto> {
   const res = await api.delete<CourseDto>(`/courses/${id}`);

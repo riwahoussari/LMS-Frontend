@@ -22,11 +22,13 @@ import { cn } from "@/lib/utils";
 type Props = {
   tutorProfileId: string;
   setTutorProfileId: React.Dispatch<React.SetStateAction<string>>;
+  setTutorUserId?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function TutorsSelect({
   tutorProfileId,
   setTutorProfileId,
+  setTutorUserId,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [fullname, setFullname] = useState("");
@@ -82,6 +84,13 @@ export default function TutorsSelect({
                       key={tutor.tutorProfile.id}
                       value={tutor.firstName + " " + tutor.lastName}
                       onSelect={() => {
+                        if (setTutorUserId) {
+                          setTutorUserId(
+                            tutor.tutorProfile!.id == tutorProfileId
+                              ? ""
+                              : tutor.id
+                          );
+                        }
                         setTutorProfileId(
                           tutor.tutorProfile!.id == tutorProfileId
                             ? ""
