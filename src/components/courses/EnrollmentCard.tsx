@@ -2,22 +2,36 @@ import { Link } from "react-router-dom";
 import { Skeleton } from "../ui/skeleton";
 import { type EnrollmentDto } from "@/lib/constants";
 import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import { getEnrollmentStatusColor } from "@/lib/courseUtils";
 
 export default function EnrollmentCard({
   course: { id, title },
   status,
 }: EnrollmentDto) {
   return (
-    <div className="w-2xl rounded-md shadow-md border p-6">
+    <div className="w-lg rounded-md shadow-md border p-6">
       <div>
         <p className="text-3xl font-semibold capitalize mb-2">{title}</p>
-        <p>Enrollment Status: {status}</p>
       </div>
 
-      <div className="flex justify-between items-start mt-6  border-t pt-6">
+      <div className="flex justify-between items-center mt-6  border-t pt-6">
+        <div>
+          <p className="opacity-50 mb-1 text-sm font-light">Status</p>
+          <Badge
+            variant={"outline"}
+            className={getEnrollmentStatusColor(status) + " h-8 text-sm "}
+          >
+            {status}
+          </Badge>
+        </div>
         <div>
           <Link to={`/courses/${id}`} className="hover:underline">
-            <Button className="rounded-ful text-lg cursor-pointer" size="lg">
+            <Button
+              variant={"secondary"}
+              className="rounded-ful text-lg cursor-pointer"
+              size="lg"
+            >
               View Course
             </Button>
           </Link>

@@ -94,7 +94,7 @@ export default function CourseCard({
           <div className="flex flex-wrap gap-3">
             {tutorProfiles.map((tp, i) => (
               <Fragment key={tp.id}>
-                <Link to={`/tutors/${tp.id}`} className="hover:underline">
+                <Link to={`/users/${tp.userId}`} className="hover:underline">
                   <p className="capitalize">
                     {tp.firstName + " " + tp.lastName}
                   </p>

@@ -23,7 +23,6 @@ import ErrorCard from "@/components/shared/ErrorCard";
 
 export default function CoursePage() {
   const { courseId } = useParams<{ courseId: string }>();
-  const navigate = useNavigate();
 
   const { user } = useAuth();
   const [course, setCourse] = useState<CourseDto | null>(null);

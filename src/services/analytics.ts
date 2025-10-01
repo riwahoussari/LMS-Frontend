@@ -1,4 +1,4 @@
-import type { AnalyticsResponse } from "@/pages/AnalyticsPage";
+import type { AnalyticsResponse } from "@/pages/admin/AnalyticsPage";
 import { api } from "./api";
 
 export async function getPlatformAnalytics(): Promise<AnalyticsResponse> {

@@ -43,19 +43,19 @@ export const getCourseStatusIcon = (status?: CourseStatus) => {
 export const getEnrollmentStatusColor = (status?: EnrollmentStatus) => {
   switch (status) {
     case "Active":
-      return "text-blue-600";
+      return "text-blue-600 border-blue-600";
     case "Dropped":
-      return "text-yellow-600";
+      return "text-yellow-600 border-yellow-600";
     case "Failed":
-      return "text-red-600";
+      return "text-red-600 border-red-600";
     case "Passed":
-      return "text-green-600";
+      return "text-green-600 border-green-600";
     case "Pending":
-      return "text-foreground/50";
+      return "text-foreground/50 border-foreground/50";
     case "Suspended":
-      return "text-red-600";
+      return "text-red-600 border-red-600";
     default:
-      return "text-foreground/50";
+      return "text-foreground/50 border-foreground/50";
   }
 };
 

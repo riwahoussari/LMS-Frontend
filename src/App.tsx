@@ -15,10 +15,12 @@ import DiscoverNewPage from "./pages/courses/DiscoverNewPage";
 import NotFoundPage from "./pages/auth/NotFoundPage";
 import CreateCoursePage from "./pages/courses/CreateCoursePage";
 import CoursePage from "./pages/courses/CoursePage";
-import CategoriesPage from "./pages/CategoriesPage";
-import TagsPage from "./pages/TagsPage";
-import PlatformAnalyticsPage from "./pages/AnalyticsPage";
+import CategoriesPage from "./pages/admin/CategoriesPage";
+import TagsPage from "./pages/admin/TagsPage";
+import PlatformAnalyticsPage from "./pages/admin/AnalyticsPage";
 import EditCoursePage from "./pages/courses/EditCoursePage";
+import UsersPage from "./pages/users/UsersPage";
+import UserPage from "./pages/users/UserPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +37,24 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <HomePage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* users routes */}
+      <Route
+        path="/users"
+        element={
+          <ProtectedRoute roles={[ROLES.ADMIN]}>
+            <UsersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/users/:userId"
+        element={
+          <ProtectedRoute>
+            <UserPage />
           </ProtectedRoute>
         }
       />

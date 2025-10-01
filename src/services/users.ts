@@ -1,8 +1,14 @@
-import type { UserDto, PagedResult, UserFitlersType } from "@/lib/constants";
+import type {
+  UserDto,
+  PagedResult,
+  UserFiltersType,
+  UpdateUserDto,
+} from "@/lib/constants";
 import { api } from "./api";
 
+// read
 export async function getUsers(
-  filters: UserFitlersType
+  filters: UserFiltersType
 ): Promise<PagedResult<UserDto>> {
   const res = await api.get<PagedResult<UserDto>>("/users", {
     params: filters,
@@ -15,5 +21,16 @@ export async function getUsers(
 export async function getUser(id: string) {
   const res = await api.get<UserDto>(`/users/${id}`);
 
+  return res.data;
+}
+
+// update
+export async function updateUser(data: UpdateUserDto): Promise<UserDto> {
+  const res = await api.patch<UserDto>(`/users/me`, data);
+  return res.data;
+}
+
+export async function toggleSuspendUser(userId: string, isSuspended: boolean) {
+  const res = await api.patch<UserDto>(`/users/${userId}`, { isSuspended });
   return res.data;
 }

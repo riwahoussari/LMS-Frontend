@@ -3,6 +3,7 @@ import {
   type CourseFitlersType,
   type CreateCourseDto,
   type PagedResult,
+  type UpdateCourseDto,
 } from "@/lib/constants";
 import { api } from "./api";
 
@@ -29,7 +30,7 @@ export async function createCourse(data: CreateCourseDto): Promise<CourseDto> {
 }
 
 // update
-export async function updateCourse(id:string, data: CreateCourseDto): Promise<CourseDto> {
+export async function updateCourse(id:string, data: UpdateCourseDto): Promise<CourseDto> {
   const res = await api.put<CourseDto>(`/courses/${id}`, data);
   return res.data;
 }

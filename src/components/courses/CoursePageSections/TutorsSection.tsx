@@ -18,7 +18,7 @@ export default function TutorsSection({ course }: { course: CourseDto }) {
         {course.tutorProfiles.map((tutor) => (
           <div key={tutor.id} className="flex items-start gap-3">
             <div className="flex-1 min-w-0">
-              <Link className="hover:underline" to={`/tutors/${tutor.id}`}>
+              <Link className="hover:underline" to={`/users/${tutor.userId}`}>
                 <h4 className="font-medium">
                   {tutor.firstName} {tutor.lastName}
                 </h4>

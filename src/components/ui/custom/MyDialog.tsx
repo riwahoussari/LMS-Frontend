@@ -43,7 +43,7 @@ export default function MyDialog({
               }}
               variant="outline"
             >
-              Clear Filters
+              Clear
             </Button>
           )}
         </div>

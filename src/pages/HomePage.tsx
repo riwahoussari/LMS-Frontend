@@ -1,15 +1,21 @@
 import { useAuth } from "@/context/AuthContext";
 import {
   COURSE_SORT_OPTIONS,
+  COURSE_STATUSES,
   ENROLLMENT_STATUS_LIST,
   ROLES,
+  type CourseStatus,
   type EnrollmentDto,
+  type EnrollmentStatus,
 } from "@/lib/constants";
 import NotFoundPage from "./auth/NotFoundPage";
 import { useEffect, useState } from "react";
 import { useAsync } from "@/hooks/useAsync";
 import { toast } from "sonner";
-import { getMyEnrollments } from "@/services/enrollments";
+import {
+  getMyEnrollments,
+  getStudentEnrollments,
+} from "@/services/enrollments";
 import EnrollmentCard, {
   SkeletonEnrollmentCard,
 } from "@/components/courses/EnrollmentCard";
@@ -39,21 +45,46 @@ import { getUser } from "@/services/users";
 import PageTitle from "@/components/ui/custom/PageTitle";
 import { Navigate } from "react-router-dom";
 import LoadingDiv from "@/components/shared/LoadingDiv";
+import { CourseStatusSelect } from "@/components/forms/CourseStatusSelect";
 
 export default function HomePage() {
   const { user } = useAuth();
 
-  if (user?.role == ROLES.STUDENT) return <StudentHomePage />;
-  if (user?.role == ROLES.TUTOR) return <TutorHomePage userId={user.sub} />;
-  if (user?.role == ROLES.ADMIN) return <Navigate to={"/courses"} />
+  if (user?.role == ROLES.STUDENT)
+    return (
+      <main>
+        <PageTitle>My Enrollments</PageTitle>
+        <StudentEnrollments />
+      </main>
+    );
+  if (user?.role == ROLES.TUTOR)
+    return (
+      <main>
+        <PageTitle>My Courses</PageTitle>
+        <TutorCourses showStatus={true} userId={user.sub} />
+      </main>
+    );
+  if (user?.role == ROLES.ADMIN) return <Navigate to={"/courses"} />;
   return <NotFoundPage />;
 }
 
-function TutorHomePage({ userId }: { userId: string }) {
-  const { data: user, loading } = useCachedAsync("getUser", getUser, [userId], []);
+export function TutorCourses({
+  userId,
+  showStatus = false,
+}: {
+  userId: string;
+  showStatus?: boolean;
+}) {
+  const { data: user, loading } = useCachedAsync(
+    "getUser",
+    getUser,
+    [userId],
+    []
+  );
 
   // filters
   const [title, setTitle] = useState("");
+  const [status, setStatus] = useState<CourseStatus>();
   const [categoryId, setCategoryId] = useState("");
   const [tagIds, setTagIds] = useState<string[]>([]);
   // sorting
@@ -65,6 +96,7 @@ function TutorHomePage({ userId }: { userId: string }) {
 
   const query = {
     title,
+    status: showStatus ? status : COURSE_STATUSES.PUBLISHED,
     categoryId,
     tagIds,
     tutorProfileId: user?.tutorProfile?.id,
@@ -79,11 +111,9 @@ function TutorHomePage({ userId }: { userId: string }) {
     if (error) toast.error("Failed to load courses");
   }, [error]);
 
-  if (loading) return <LoadingDiv />
-  if (!user?.tutorProfile) return <NotFoundPage />;
+  if (loading) return <LoadingDiv />;
   return (
-    <main>
-      <PageTitle>My Courses</PageTitle>
+    <>
       <div className="flex items-end flex-wrap gap-4">
         <SearchBar
           placeholder="Search by title"
@@ -97,8 +127,12 @@ function TutorHomePage({ userId }: { userId: string }) {
           onClear={() => {
             setCategoryId("");
             setTagIds([]);
+            setStatus(undefined);
           }}
         >
+          {showStatus && (
+            <CourseStatusSelect status={status} setStatus={setStatus} />
+          )}
           <CategoriesSelect
             categoryId={categoryId}
             setCategoryId={setCategoryId}
@@ -124,7 +158,7 @@ function TutorHomePage({ userId }: { userId: string }) {
       </div>
 
       {/* cards */}
-      <CourseList showStatus data={data?.items} />
+      <CourseList showStatus={showStatus} data={data?.items} />
 
       {/* pagination */}
       {data && data.items.length > 0 && (
@@ -134,18 +168,39 @@ function TutorHomePage({ userId }: { userId: string }) {
           setPage={setPage}
         />
       )}
-    </main>
+    </>
   );
 }
 
-function StudentHomePage() {
-  const [enrollmentStatus, setEnrollmentStatus] = useState(" ");
+export function StudentEnrollments({
+  studentProfileId,
+}: {
+  studentProfileId?: string;
+}) {
+  const { user } = useAuth();
+  const [enrollmentStatus, setEnrollmentStatus] = useState<EnrollmentStatus>();
+
+  if (!user) return;
+  const isStudent = user.role == ROLES.STUDENT;
+  const isAdmin = user.role == ROLES.ADMIN;
+
+  if (!isAdmin && !isStudent) return;
+  if (isAdmin && !studentProfileId) return;
 
   // fetch posts
+  const fetcher = isStudent ? getMyEnrollments : getStudentEnrollments;
+  const cachKey = isStudent
+    ? `getMy${enrollmentStatus}Enrollments`
+    : `getStudent${studentProfileId}${enrollmentStatus}Enrollments`;
+
+  const filters = isStudent
+    ? { enrollmentStatus, studentProfileId: "" }
+    : { enrollmentStatus, studentProfileId: studentProfileId! };
+
   const { data, error } = useCachedAsync(
-    `getMy${enrollmentStatus}Enrollments`,
-    getMyEnrollments,
-    [{ enrollmentStatus }],
+    cachKey,
+    fetcher,
+    [filters],
     [enrollmentStatus]
   );
 
@@ -157,8 +212,7 @@ function StudentHomePage() {
   }, [error]);
 
   return (
-    <main>
-      <PageTitle>My Enrollments</PageTitle>
+    <div className="space-y-6">
       <div>
         {/* Enrollment Status Tabs  */}
 
@@ -167,7 +221,7 @@ function StudentHomePage() {
             <p className="opacity-80 ms-1 mb-2">Enrollment Status:</p>
           </Label>
           <Select
-            onValueChange={setEnrollmentStatus}
+            onValueChange={(v) => setEnrollmentStatus(v as EnrollmentStatus)}
             value={enrollmentStatus}
             defaultValue={enrollmentStatus}
           >
@@ -190,13 +244,13 @@ function StudentHomePage() {
       </div>
 
       {/* cards */}
-      <div className="flex flex-wrap justify-start gap-16">
+      <div className="flex flex-wrap justify-start gap-8">
         {data
           ? data.map((enrollment: EnrollmentDto) => (
               <EnrollmentCard key={enrollment.course.id} {...enrollment} />
             ))
           : [1, 2, 3].map((i) => <SkeletonEnrollmentCard key={i} />)}
       </div>
-    </main>
+    </div>
   );
 }

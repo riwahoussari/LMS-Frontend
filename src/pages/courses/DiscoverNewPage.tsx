@@ -1,10 +1,14 @@
 import CategoriesSelect from "@/components/forms/CategoriesSelect";
 import { useAuth } from "@/context/AuthContext";
 import { useAsync } from "@/hooks/useAsync";
-import { COURSE_SORT_OPTIONS, COURSE_STATUSES, ROLES, type CourseStatus } from "@/lib/constants";
+import {
+  COURSE_SORT_OPTIONS,
+  COURSE_STATUSES,
+  ROLES,
+  type CourseStatus,
+} from "@/lib/constants";
 import { getCourses } from "@/services/courses";
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 import { toast } from "sonner";
 import TagsMultiSelect from "@/components/forms/TagsMultiSelect";
 import FilterIconSvg from "@/components/ui/custom/FilterIconSvg";
@@ -19,15 +23,9 @@ import {
 import MyPagination from "@/components/ui/custom/MyPagination";
 import TutorsSelect from "@/components/forms/TutorsSelect";
 import { CourseStatusSelect } from "@/components/forms/CourseStatusSelect";
+import NotFoundPage from "../auth/NotFoundPage";
 
 export default function DiscoverNewPage() {
-  const { user } = useAuth();
-
-  if (user) return <DiscoverPage />;
-  return <Navigate to="/unauthorized" replace />;
-}
-
-function DiscoverPage() {
   // if admin show status and add status filter
   const { user } = useAuth();
   const isAdmin = user && user.role === ROLES.ADMIN;
@@ -62,6 +60,7 @@ function DiscoverPage() {
     if (error) toast.error("Failed to load courses");
   }, [error]);
 
+  if (!user) return <NotFoundPage />;
   return (
     <main>
       <div className="flex items-end flex-wrap gap-4">

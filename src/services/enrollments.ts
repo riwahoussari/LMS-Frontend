@@ -6,8 +6,20 @@ import {
 } from "@/lib/constants";
 import { api } from "./api";
 
-export async function getMyEnrollments(filters: any): Promise<EnrollmentDto[]> {
+export async function getMyEnrollments(filters: {
+  enrollmentStatus?: EnrollmentStatus;
+}): Promise<EnrollmentDto[]> {
   const res = await api.get<EnrollmentDto[]>("/enrollments/my-enrollments", {
+    params: filters,
+  });
+  return res.data;
+}
+
+export async function getStudentEnrollments(filters: {
+  enrollmentStatus?: EnrollmentStatus;
+  studentProfileId: string;
+}): Promise<EnrollmentDto[]> {
+  const res = await api.get<EnrollmentDto[]>("/enrollments", {
     params: filters,
   });
   return res.data;

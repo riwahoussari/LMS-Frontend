@@ -1,7 +1,7 @@
 // types & dtos
 export type Role = "admin" | "tutor" | "student";
 
-export const ROLES = {
+export const ROLES: Record<string, Role> = {
   ADMIN: "admin",
   STUDENT: "student",
   TUTOR: "tutor",
@@ -20,11 +20,17 @@ type FiltersType = {
   limit?: number;
   offset?: number;
 };
-export interface UserFitlersType extends FiltersType {
+export interface UserFiltersType extends FiltersType {
   role?: Role;
   fullName?: string;
   email?: string;
 }
+export const USER_SORT_OPTIONS: TSelectOption[] = [
+  { value: "Age", text: "Age" },
+  { value: "FirstName", text: "First Name" },
+  { value: "LastName", text: "Last Name" },
+];
+export type UserSortOption = "Age" | "FirstName" | "LastName";
 
 export type UserDto = {
   id: string;
@@ -32,10 +38,20 @@ export type UserDto = {
   firstName: string;
   lastName: string;
   roleName: Role;
-  birthdate?: string;
+  birthDate?: string;
   suspended?: boolean;
   studentProfile?: StudentProfileDto;
   tutorProfile?: TutorProfileDto;
+};
+
+export type UpdateUserDto = {
+  firstName?: string;
+  lastName?: string;
+  birthDate?: string;
+  bio?: string;
+  expertise?: string;
+
+  major?: string;
 };
 
 export type PartialUserDto = {
@@ -43,7 +59,7 @@ export type PartialUserDto = {
   firstName: string;
   lastName: string;
   email: string;
-}
+};
 
 export type StudentProfileDto = {
   id: string;
@@ -60,7 +76,7 @@ export type CourseStatus = "Draft" | "Published" | "Archived";
 export const COURSE_STATUSES: Record<string, CourseStatus> = {
   DRAFT: "Draft",
   PUBLISHED: "Published",
-  ARCHIVED: "Archived"
+  ARCHIVED: "Archived",
 };
 
 export type TSelectOption = { value: string; text: string };
@@ -199,7 +215,7 @@ export type EnrollmentStatus =
   | "Failed"
   | "Suspended"
   | "Dropped";
-export const ENROLLMENT_STATUS_LIST = [
+export const ENROLLMENT_STATUS_LIST: EnrollmentStatus[] = [
   "Pending",
   "Active",
   "Passed",
@@ -227,7 +243,7 @@ export type ExtendedEnrollmentDto = {
   status: EnrollmentStatus;
   user: PartialUserDto;
   studentProfile: StudentProfileDto;
-}
+};
 
 export type RegisterDto = {
   email: string;

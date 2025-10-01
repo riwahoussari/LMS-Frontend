@@ -1,4 +1,4 @@
-import NotFoundPage from "./auth/NotFoundPage";
+import NotFoundPage from "../auth/NotFoundPage";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -81,8 +81,8 @@ export default function CategoriesPage() {
   };
 
   const handleDelete = (id: string) => {
-    setCategories(categories.filter(cat => cat.id !== id))
-  }
+    setCategories(categories.filter((cat) => cat.id !== id));
+  };
 
   return (
     <main>
@@ -124,7 +124,10 @@ export default function CategoriesPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {categories && categories.map((cat) => <CategoryRow key={cat.id} onDelete={handleDelete} cat={cat} />)}
+            {categories &&
+              categories.map((cat) => (
+                <CategoryRow key={cat.id} onDelete={handleDelete} cat={cat} />
+              ))}
             {loading &&
               [1, 2, 3].map((i) => (
                 <TableRow key={i}>
@@ -141,7 +144,13 @@ export default function CategoriesPage() {
   );
 }
 
-function CategoryRow({ cat, onDelete }: { cat: CategoryStatsDto, onDelete: (id: string) => void }) {
+function CategoryRow({
+  cat,
+  onDelete,
+}: {
+  cat: CategoryStatsDto;
+  onDelete: (id: string) => void;
+}) {
   const [name, setName] = useState(cat.name);
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -204,7 +213,9 @@ function CategoryRow({ cat, onDelete }: { cat: CategoryStatsDto, onDelete: (id: 
 
             <div className="flex justify-between gap-5 mt-5">
               <Button onClick={handleSubmit}>Update</Button>
-              <Button variant={"destructive"} onClick={handleDelete}>Delete Category</Button>
+              <Button variant={"destructive"} onClick={handleDelete}>
+                Delete Category
+              </Button>
             </div>
           </DialogContent>
         </Dialog>

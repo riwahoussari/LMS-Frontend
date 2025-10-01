@@ -54,7 +54,7 @@ export default function Navbar() {
         </div>
 
         {/* Right profile link */}
-        {user && <ProfilePic />}
+        {user && <ProfilePic userId={user.sub} />}
       </header>
       <Outlet />
     </>
@@ -110,9 +110,9 @@ function DropdownNavMenu() {
   );
 }
 
-function ProfilePic() {
+function ProfilePic({ userId }: { userId: string }) {
   return (
-    <Link to="/profile">
+    <Link to={`/users/${userId}`}>
       <Avatar className="w-9 h-9">
         <AvatarImage src="/profile-pic-placeholder.png" alt="User" />
         <AvatarFallback>

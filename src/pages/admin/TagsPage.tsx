@@ -1,4 +1,4 @@
-import NotFoundPage from "./auth/NotFoundPage";
+import NotFoundPage from "../auth/NotFoundPage";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -81,8 +81,8 @@ export default function TagsPage() {
   };
 
   const handleDelete = (id: string) => {
-    setTags(tags.filter(tag => tag.id !== id))
-  }
+    setTags(tags.filter((tag) => tag.id !== id));
+  };
 
   return (
     <main>
@@ -124,7 +124,10 @@ export default function TagsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tags && tags.map((tag) => <TagRow key={tag.id} onDelete={handleDelete} tag={tag} />)}
+            {tags &&
+              tags.map((tag) => (
+                <TagRow key={tag.id} onDelete={handleDelete} tag={tag} />
+              ))}
             {loading &&
               [1, 2, 3].map((i) => (
                 <TableRow key={i}>
@@ -141,7 +144,13 @@ export default function TagsPage() {
   );
 }
 
-function TagRow({ tag, onDelete }: { tag: TagStatsDto, onDelete: (id: string) => void }) {
+function TagRow({
+  tag,
+  onDelete,
+}: {
+  tag: TagStatsDto;
+  onDelete: (id: string) => void;
+}) {
   const [name, setName] = useState(tag.name);
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -204,7 +213,9 @@ function TagRow({ tag, onDelete }: { tag: TagStatsDto, onDelete: (id: string) =>
 
             <div className="flex justify-between gap-5 mt-5">
               <Button onClick={handleSubmit}>Update</Button>
-              <Button variant={"destructive"} onClick={handleDelete}>Delete Tag</Button>
+              <Button variant={"destructive"} onClick={handleDelete}>
+                Delete Tag
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
