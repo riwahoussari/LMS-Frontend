@@ -1,6 +1,5 @@
 import { useAsync } from "@/hooks/useAsync";
 import {
-  COURSE_SORT_OPTIONS,
   USER_SORT_OPTIONS,
   type Role,
   type UserDto,
@@ -76,12 +75,12 @@ export default function UsersPage() {
         <MyDialog
           icon={<SortIconSvg className="scale-150" />}
           onClear={() => {
-            setSortBy(COURSE_SORT_OPTIONS[0]?.value || "");
+            setSortBy(USER_SORT_OPTIONS[0]?.value || "");
             setSortAsc(true);
           }}
         >
           <SortOptionSelect
-            options={COURSE_SORT_OPTIONS}
+            options={USER_SORT_OPTIONS}
             sortBy={sortBy}
             setSortBy={setSortBy}
           />
