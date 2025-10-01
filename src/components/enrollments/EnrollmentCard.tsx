@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 import { type EnrollmentDto } from "@/lib/constants";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { getEnrollmentStatusColor } from "@/lib/courseUtils";
 
 export default function EnrollmentCard({

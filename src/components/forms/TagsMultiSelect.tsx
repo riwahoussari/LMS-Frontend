@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { getTags } from "@/services/tags";
-import { MultiSelect } from "../ui/custom/MultiSelect";
+import { MultiSelect } from "@/components/ui/custom/MultiSelect";
 import { Label } from "@radix-ui/react-label";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
 

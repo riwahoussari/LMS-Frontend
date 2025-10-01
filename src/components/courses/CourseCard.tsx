@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 import { type CourseDto } from "@/lib/constants";
 import { formatDate, getRoundedWeeksBetween } from "@/lib/utils";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { Fragment } from "react";
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { CircleCheck } from "lucide-react";
 import { getCourseStatusBadgeColor } from "@/lib/courseUtils";
 
