@@ -29,11 +29,11 @@ import CoursesMultiSelect from "@/components/forms/CoursesMultiSelect";
 import { getCourse, updateCourse } from "@/services/courses";
 import {
   COURSE_STATUSES,
-  DAYS_OF_WEEK,
-  ROLES,
   type CourseDto,
   type UpdateCourseDto,
-} from "@/lib/constants";
+} from "@/lib/constants/courses";
+import { ROLES } from "@/lib/constants/users";
+import { DAYS_OF_WEEK } from "@/lib/constants/others";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { useCachedAsync } from "@/hooks/useCachedAsync";

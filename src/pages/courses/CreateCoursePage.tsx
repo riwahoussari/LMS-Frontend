@@ -27,7 +27,7 @@ import { Trash2, Plus } from "lucide-react";
 import TagsMultiSelect from "@/components/forms/TagsMultiSelect";
 import CoursesMultiSelect from "@/components/forms/CoursesMultiSelect";
 import { createCourse } from "@/services/courses";
-import type { CreateCourseDto } from "@/lib/constants";
+import type { CreateCourseDto } from "@/lib/constants/courses";
 import BackButton from "@/components/shared/BackButton";
 
 const courseSessionSchema = z

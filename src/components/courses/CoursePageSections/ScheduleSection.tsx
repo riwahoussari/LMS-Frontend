@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";import type { CourseDto } from "@/lib/constants";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { CourseDto } from "@/lib/constants/courses";
 import { Separator } from "@radix-ui/react-select";
 import { format } from "date-fns";
 import { Calendar, Clock, MapPin } from "lucide-react";
-
 
 export default function ScheduleSection({ course }: { course: CourseDto }) {
   return (

@@ -4,10 +4,10 @@ import { useAuth } from "@/context/AuthContext";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
 import {
   ENROLLMENT_STATUSES,
-  ROLES,
-  type CourseDto,
   type EnrollmentDto,
-} from "@/lib/constants";
+} from "@/lib/constants/enrollments";
+import { ROLES } from "@/lib/constants/users";
+import type { CourseDto } from "@/lib/constants/courses";
 import {
   getEnrollmentStatusColor,
   getEnrollmentStatusIcon,

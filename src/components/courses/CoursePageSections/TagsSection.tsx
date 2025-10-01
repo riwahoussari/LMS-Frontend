@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { CourseDto } from "@/lib/constants";
+import type { CourseDto } from "@/lib/constants/courses";
 import { Tag } from "lucide-react";
 
 export default function TagsSection({ course }: { course: CourseDto }) {

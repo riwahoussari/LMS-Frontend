@@ -1,11 +1,25 @@
 import { useAuth } from "@/context/AuthContext";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
-import { ENROLLMENT_STATUS_LIST, ROLES, type EnrollmentDto, type EnrollmentStatus } from "@/lib/constants";
-import { getMyEnrollments, getStudentEnrollments } from "@/services/enrollments";
+import {
+  ENROLLMENT_STATUS_LIST,
+  type EnrollmentDto,
+  type EnrollmentStatus,
+} from "@/lib/constants/enrollments";
+import { ROLES } from "@/lib/constants/users";
+import {
+  getMyEnrollments,
+  getStudentEnrollments,
+} from "@/services/enrollments";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import EnrollmentCard, { SkeletonEnrollmentCard } from "./EnrollmentCard";
 
 export default function StudentEnrollments({

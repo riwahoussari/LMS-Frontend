@@ -1,4 +1,4 @@
-import type { CourseDto } from "@/lib/constants";
+import type { CourseDto } from "@/lib/constants/courses";
 import CourseCard, { SkeletonCourseCard } from "./CourseCard";
 
 

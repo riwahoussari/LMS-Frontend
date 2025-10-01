@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ROLES, type Role } from "@/lib/constants";
+import { ROLES, type Role } from "@/lib/constants/users";
 
 export function RoleSelect({
   role,

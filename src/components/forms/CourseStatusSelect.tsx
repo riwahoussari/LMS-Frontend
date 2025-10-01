@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { COURSE_STATUSES, type CourseStatus } from "@/lib/constants";
+import { COURSE_STATUSES, type CourseStatus } from "@/lib/constants/courses";
 
 export function CourseStatusSelect({
   status,

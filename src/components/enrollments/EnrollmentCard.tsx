@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
-import { type EnrollmentDto } from "@/lib/constants";
+import { type EnrollmentDto } from "@/lib/constants/enrollments";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getEnrollmentStatusColor } from "@/lib/courseUtils";

@@ -1,4 +1,4 @@
-import type { TSelectOption } from "@/lib/constants";
+import type { TSelectOption } from "@/lib/constants/others";
 import { Label } from "@radix-ui/react-label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 

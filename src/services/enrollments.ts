@@ -3,7 +3,7 @@ import {
   type EnrollmentDto,
   type EnrollmentStatus,
   type ExtendedEnrollmentDto,
-} from "@/lib/constants";
+} from "@/lib/constants/enrollments";
 import { api } from "./api";
 
 export async function getMyEnrollments(filters: {

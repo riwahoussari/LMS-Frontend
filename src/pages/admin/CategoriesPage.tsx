@@ -1,4 +1,4 @@
-import NotFoundPage from "../auth/NotFoundPage";
+import NotFoundPage from "../NotFoundPage";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { ROLES, type CategoryStatsDto } from "@/lib/constants";
+import { ROLES } from "@/lib/constants/users";
+import type { CategoryStatsDto } from "@/lib/constants/courses";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";

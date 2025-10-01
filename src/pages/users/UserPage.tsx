@@ -19,8 +19,8 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import ErrorCard from "@/components/shared/ErrorCard";
 import LoadingDiv from "@/components/shared/LoadingDiv";
-import { ROLES, type UpdateUserDto, type UserDto } from "@/lib/constants";
-import NotFoundPage from "../auth/NotFoundPage";
+import { ROLES, type UpdateUserDto, type UserDto } from "@/lib/constants/users";
+import NotFoundPage from "../NotFoundPage";
 import StudentEnrollments from "@/components/enrollments/StudentEnrollments";
 import TutorCourses from "@/components/courses/TutorCourses";
 

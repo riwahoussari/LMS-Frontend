@@ -1,7 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, AlertCircle } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { useParams } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
 import { getCourse } from "@/services/courses";
@@ -15,7 +12,8 @@ import TutorsSection from "@/components/courses/CoursePageSections/TutorsSection
 import TagsSection from "@/components/courses/CoursePageSections/TagsSection";
 import CourseInfoSection from "@/components/courses/CoursePageSections/CourseInfoSection";
 import { useAuth } from "@/context/AuthContext";
-import { ROLES, type CourseDto } from "@/lib/constants";
+import { type CourseDto } from "@/lib/constants/courses";
+import { ROLES } from "@/lib/constants/users";
 import CourseStatusSection from "@/components/courses/CoursePageSections/CourseStatusSection";
 import { useEffect, useState } from "react";
 import BackButton from "@/components/shared/BackButton";
@@ -89,7 +87,7 @@ export default function CoursePage() {
           {(isAdmin || isAssignedTutor) && (
             <CourseStatusSection onUpdate={setCourse} course={course} />
           )}
-          <TutorsSection isAssignedTutor={isAssignedTutor} course={course} />
+          <TutorsSection isAssignedTutor={!!isAssignedTutor} course={course} />
           <TagsSection course={course} />
           <CourseInfoSection course={course} />
         </div>

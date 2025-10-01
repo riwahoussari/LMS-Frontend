@@ -1,6 +1,6 @@
 import { useAsync } from "@/hooks/useAsync";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
-import { COURSE_SORT_OPTIONS, COURSE_STATUSES, type CourseStatus } from "@/lib/constants";
+import { COURSE_SORT_OPTIONS, COURSE_STATUSES, type CourseStatus } from "@/lib/constants/courses";
 import { getCourses } from "@/services/courses";
 import { getUser } from "@/services/users";
 import { useEffect, useState } from "react";
@@ -8,7 +8,6 @@ import LoadingDiv from "../shared/LoadingDiv";
 import { toast } from "sonner";
 import SearchBar from "@/components/ui/custom/SearchBar";
 import MyDialog from "@/components/ui/custom/MyDialog";
-import FilterIconSvg from "@/components/ui/custom/FilterIconSvg";
 import { CourseStatusSelect } from "../forms/CourseStatusSelect";
 import CategoriesSelect from "../forms/CategoriesSelect";
 import TagsMultiSelect from "../forms/TagsMultiSelect";
@@ -16,6 +15,7 @@ import SortIconSvg from "@/components/ui/custom/SortIconSvg";
 import { SortDirectionSelect, SortOptionSelect } from "../forms/SortOptionSelect";
 import { CourseList } from "./CourseList";
 import MyPagination from "@/components/ui/custom/MyPagination";
+import { Funnel } from "lucide-react";
 
 export default function TutorCourses({
   userId,
@@ -72,7 +72,7 @@ export default function TutorCourses({
 
         {/* filtering dialog */}
         <MyDialog
-          icon={<FilterIconSvg className="scale-150" />}
+          icon={<Funnel className="w-5! h-5!" />}
           onClear={() => {
             setCategoryId("");
             setTagIds([]);

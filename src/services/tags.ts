@@ -1,4 +1,4 @@
-import type { TagDto, TagStatsDto } from "@/lib/constants";
+import type { TagDto, TagStatsDto } from "@/lib/constants/courses";
 import { api } from "./api";
 
 export async function getTags(): Promise<TagDto[]> {

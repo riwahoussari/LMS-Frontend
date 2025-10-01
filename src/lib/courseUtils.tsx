@@ -1,5 +1,6 @@
 import { AlertCircle, CheckCircle, Circle, CircleDashed, CircleMinus, Clock, XCircle } from "lucide-react";
-import { ENROLLMENT_STATUSES, type CourseStatus, type EnrollmentStatus } from "./constants";
+import { ENROLLMENT_STATUSES, type EnrollmentStatus } from "./constants/enrollments";
+import type { CourseStatus } from "./constants/courses";
 
 export const getCourseStatusColor = (status?: CourseStatus) => {
   switch (status) {

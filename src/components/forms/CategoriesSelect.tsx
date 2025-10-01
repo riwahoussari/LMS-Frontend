@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getCategories } from "@/services/categories";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import { useCachedAsync } from "@/hooks/useCachedAsync";

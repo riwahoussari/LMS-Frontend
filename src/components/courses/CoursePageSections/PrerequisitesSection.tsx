@@ -1,12 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
-import { ENROLLMENT_STATUSES, ROLES, type CourseDto } from "@/lib/constants";
+import { type CourseDto } from "@/lib/constants/courses";
+import { ROLES } from "@/lib/constants/users";
+import { ENROLLMENT_STATUSES } from "@/lib/constants/enrollments";
 import { getMyEnrollments } from "@/services/enrollments";
 import { BookOpen, CheckCircle, Circle } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function PrerequisitesSection({ course }: { course: CourseDto }) {
+export default function PrerequisitesSection({
+  course,
+}: {
+  course: CourseDto;
+}) {
   const { user } = useAuth();
   const isStudent = user?.role == ROLES.STUDENT;
 

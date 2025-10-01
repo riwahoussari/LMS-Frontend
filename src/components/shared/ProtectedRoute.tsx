@@ -2,7 +2,7 @@ import { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import LoadingDiv from "./LoadingDiv";
-import NotFoundPage from "@/pages/auth/NotFoundPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 interface ProtectedRouteProps {
   children: ReactNode;

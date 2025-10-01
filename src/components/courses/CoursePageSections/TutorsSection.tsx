@@ -1,10 +1,11 @@
 import TutorsSelect from "@/components/forms/TutorsSelect";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { CourseDto, TutorExtendedProfileDto } from "@/lib/constants";
+import type { CourseDto } from "@/lib/constants/courses";
+import type { TutorExtendedProfileDto } from "@/lib/constants/users";
 import { assignTutor, unassignTutor } from "@/services/courses";
 import axios from "axios";
-import { Plus, User, X } from "lucide-react";
+import { Plus, User } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";

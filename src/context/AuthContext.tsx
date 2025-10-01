@@ -8,7 +8,7 @@ import {
 import { api } from "../services/api";
 import { auth, type Tokens } from "../services/auth";
 import { jwtDecode } from "jwt-decode";
-import { ROLES, type RegisterDto, type Role } from "@/lib/constants";
+import { ROLES, type RegisterDto, type Role } from "@/lib/constants/users";
 import { toast } from "sonner";
 
 export interface JwtPayload {

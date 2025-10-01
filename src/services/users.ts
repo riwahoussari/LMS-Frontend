@@ -1,9 +1,9 @@
 import type {
   UserDto,
-  PagedResult,
   UserFiltersType,
   UpdateUserDto,
-} from "@/lib/constants";
+} from "@/lib/constants/users";
+import type { PagedResult } from "@/lib/constants/others";
 import { api } from "./api";
 
 // read

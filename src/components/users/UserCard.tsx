@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
-import { type Role, type UserDto } from "@/lib/constants";
-import { Button } from "@/components/ui/button";
-import { Calendar, Divide } from "lucide-react";
+import { type Role, type UserDto } from "@/lib/constants/users";
+import { Calendar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function UserCard({

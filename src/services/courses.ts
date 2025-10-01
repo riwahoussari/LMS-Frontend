@@ -2,9 +2,9 @@ import {
   type CourseDto,
   type CourseFitlersType,
   type CreateCourseDto,
-  type PagedResult,
   type UpdateCourseDto,
-} from "@/lib/constants";
+} from "@/lib/constants/courses";
+import type { PagedResult } from "@/lib/constants/others";
 import { api } from "./api";
 
 // read 

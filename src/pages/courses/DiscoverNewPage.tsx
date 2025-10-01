@@ -4,14 +4,13 @@ import { useAsync } from "@/hooks/useAsync";
 import {
   COURSE_SORT_OPTIONS,
   COURSE_STATUSES,
-  ROLES,
   type CourseStatus,
-} from "@/lib/constants";
+} from "@/lib/constants/courses";
+import { ROLES } from "@/lib/constants/users";
 import { getCourses } from "@/services/courses";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import TagsMultiSelect from "@/components/forms/TagsMultiSelect";
-import FilterIconSvg from "@/components/ui/custom/FilterIconSvg";
 import SortIconSvg from "@/components/ui/custom/SortIconSvg";
 import { CourseList } from "@/components/courses/CourseList";
 import SearchBar from "@/components/ui/custom/SearchBar";
@@ -23,7 +22,8 @@ import {
 import MyPagination from "@/components/ui/custom/MyPagination";
 import TutorsSelect from "@/components/forms/TutorsSelect";
 import { CourseStatusSelect } from "@/components/forms/CourseStatusSelect";
-import NotFoundPage from "../auth/NotFoundPage";
+import NotFoundPage from "../NotFoundPage";
+import { Funnel } from "lucide-react";
 
 export default function DiscoverNewPage() {
   // if admin show status and add status filter
@@ -72,7 +72,7 @@ export default function DiscoverNewPage() {
 
         {/* filtering dialog */}
         <MyDialog
-          icon={<FilterIconSvg className="scale-150" />}
+          icon={<Funnel className="w-5! h-5!" />}
           onClear={() => {
             setStatus(undefined);
             setCategoryId("");

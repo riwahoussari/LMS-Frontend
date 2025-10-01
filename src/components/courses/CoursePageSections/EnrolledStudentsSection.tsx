@@ -9,11 +9,9 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/AuthContext";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
-import {
-  ROLES,
-  type CourseDto,
-  type ExtendedEnrollmentDto,
-} from "@/lib/constants";
+import { type CourseDto } from "@/lib/constants/courses";
+import type { ExtendedEnrollmentDto } from "@/lib/constants/enrollments";
+import { ROLES } from "@/lib/constants/users";
 import {
   getEnrollmentStatusColor,
   getEnrollmentStatusSelectOptions,

@@ -1,7 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { GUEST_NAV_LINKS, USER_NAV_LINKS } from "@/lib/constants";
+import { GUEST_NAV_LINKS, USER_NAV_LINKS } from "@/lib/constants/others";
 
 import {
   DropdownMenu,
@@ -13,6 +12,7 @@ import BurgerMenuSvg from "@/components/ui/custom/BurgerMenuSvg";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
+import { UserRound } from "lucide-react";
 
 export default function Navbar() {
   const { user, isLoading } = useAuth();
@@ -113,43 +113,9 @@ function DropdownNavMenu() {
 function ProfilePic({ userId }: { userId: string }) {
   return (
     <Link to={`/users/${userId}`}>
-      <Avatar className="w-9 h-9">
-        <AvatarImage src="/profile-pic-placeholder.png" alt="User" />
-        <AvatarFallback>
-          <div className="w-9 h-9 bg-gray-400 flex items-end justify-center">
-            <svg
-              className="w-6 h-8"
-              viewBox="0 0 20 20"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>profile [#1335]</title>
-              <desc>Created with Sketch.</desc>
-              <defs></defs>
-              <g
-                id="Page-1"
-                stroke="none"
-                strokeWidth="1"
-                fill="none"
-                fillRule="evenodd"
-              >
-                <g
-                  id="Dribbble-Light-Preview"
-                  transform="translate(-420.000000, -2159.000000)"
-                  fill="#000000"
-                >
-                  <g id="icons" transform="translate(56.000000, 160.000000)">
-                    <path
-                      d="M374,2009 C371.794,2009 370,2007.206 370,2005 C370,2002.794 371.794,2001 374,2001 C376.206,2001 378,2002.794 378,2005 C378,2007.206 376.206,2009 374,2009 M377.758,2009.673 C379.124,2008.574 380,2006.89 380,2005 C380,2001.686 377.314,1999 374,1999 C370.686,1999 368,2001.686 368,2005 C368,2006.89 368.876,2008.574 370.242,2009.673 C366.583,2011.048 364,2014.445 364,2019 L366,2019 C366,2014 369.589,2011 374,2011 C378.411,2011 382,2014 382,2019 L384,2019 C384,2014.445 381.417,2011.048 377.758,2009.673"
-                      id="profile-[#1335]"
-                    ></path>
-                  </g>
-                </g>
-              </g>
-            </svg>
-          </div>
-        </AvatarFallback>
-      </Avatar>
+      <div className="border-2 hover:opacity-60 rounded-full aspect-square  border-foreground">
+        <UserRound className="w-8 h-8" />
+      </div>
     </Link>
   );
 }

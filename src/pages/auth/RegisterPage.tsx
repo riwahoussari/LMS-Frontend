@@ -18,7 +18,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import AuthFormWrapper from "@/components/auth/AuthFormWrapper";
 import { useState } from "react";
-import { ROLES, type RegisterDto } from "@/lib/constants";
+import { ROLES, type RegisterDto } from "@/lib/constants/users";
 
 // Create a dynamic schema based on role
 const createSchema = (isAdmin: boolean = false) => {

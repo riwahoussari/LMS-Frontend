@@ -1,4 +1,4 @@
-import type { CategoryDto, CategoryStatsDto } from "@/lib/constants";
+import type { CategoryDto, CategoryStatsDto } from "@/lib/constants/courses";
 import { api } from "./api";
 
 export async function getCategories(): Promise<CategoryDto[]> {

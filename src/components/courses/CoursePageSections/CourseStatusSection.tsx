@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
@@ -11,10 +10,10 @@ import { useAuth } from "@/context/AuthContext";
 import { useCachedAsync } from "@/hooks/useCachedAsync";
 import {
   COURSE_STATUSES,
-  ROLES,
   type CourseDto,
   type CourseStatus,
-} from "@/lib/constants";
+} from "@/lib/constants/courses";
+import { ROLES } from "@/lib/constants/users";
 import { archiveCourse, publishCourse } from "@/services/courses";
 import axios from "axios";
 import { User } from "lucide-react";

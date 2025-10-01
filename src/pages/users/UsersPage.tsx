@@ -3,10 +3,9 @@ import {
   USER_SORT_OPTIONS,
   type Role,
   type UserDto,
-} from "@/lib/constants";
+} from "@/lib/constants/users";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import FilterIconSvg from "@/components/ui/custom/FilterIconSvg";
 import SortIconSvg from "@/components/ui/custom/SortIconSvg";
 import SearchBar from "@/components/ui/custom/SearchBar";
 import MyDialog from "@/components/ui/custom/MyDialog";
@@ -18,6 +17,7 @@ import MyPagination from "@/components/ui/custom/MyPagination";
 import { getUsers } from "@/services/users";
 import { RoleSelect } from "@/components/forms/RoleSelect";
 import UserCard, { SkeletonUserCard } from "@/components/users/UserCard";
+import { Funnel } from "lucide-react";
 
 export default function UsersPage() {
   // filters
@@ -63,7 +63,7 @@ export default function UsersPage() {
 
         {/* filtering dialog */}
         <MyDialog
-          icon={<FilterIconSvg className="scale-150" />}
+        icon={<Funnel className="w-5! h-5!" />}
           onClear={() => {
             setRole(undefined);
           }}

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
-import { type CourseDto } from "@/lib/constants";
+import { type CourseDto } from "@/lib/constants/courses";
 import { formatDate, getRoundedWeeksBetween } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Fragment } from "react";
