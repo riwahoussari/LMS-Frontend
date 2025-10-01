@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Role, type UserDto } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "lucide-react";
+import { Calendar, Divide } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function UserCard({
@@ -14,20 +14,35 @@ export default function UserCard({
   roleName,
   studentProfile,
   tutorProfile,
+  suspended,
 }: UserDto) {
   return (
     <div className="w-sm rounded-md shadow-md border p-6">
       {/* row 1 */}
       <div>
         {/* role */}
-        <div className="flex justify-end mb-3">
-          <Badge variant={"outline"} className={getRoleBadgeColor(roleName)}>
+        <div className="flex justify-between mb-4">
+          {suspended ? (
+            <Badge
+              variant={"outline"}
+              className="text-red-600 border-red-600 text-base"
+            >
+              Suspended
+            </Badge>
+          ) : (
+            <div />
+          )}
+
+          <Badge
+            variant={"outline"}
+            className={getRoleBadgeColor(roleName) + " h-8"}
+          >
             {roleName}
           </Badge>
         </div>
 
         {/* fullname - email - birthdate */}
-        <Link to={`/courses/${id}`} className="hover:underline">
+        <Link to={`/users/${id}`} className="hover:underline">
           <p className="text-2xl font-semibold capitalize mb-2">
             {firstName} {lastName}
           </p>
@@ -40,35 +55,26 @@ export default function UserCard({
       </div>
 
       {/* row 2 */}
-      <div className="flex justify-between items-start mt-6  border-t pt-6">
-        {/* tutor profile info */}
-        {tutorProfile && (
-          <div>
-            <p>Expertise: {tutorProfile.expertise}</p>
-          </div>
-        )}
 
-        {/* student profile info */}
-        {studentProfile && (
-          <div>
-            <p className="capitalize">Major: {studentProfile.major}</p>
-          </div>
-        )}
+      {(tutorProfile?.bio ||
+        tutorProfile?.expertise ||
+        studentProfile?.major) && (
+        <div className="flex justify-between items-center mt-6  border-t pt-6">
+          {/* tutor profile info */}
+          {tutorProfile && (
+            <div>
+              <p>Expertise: {tutorProfile.expertise}</p>
+            </div>
+          )}
 
-        {/* view profile button */}
-        <div>
-          <Link to={`/profiles/${id}`}>
-            <Button
-              className="rounded-ful text-lg cursor-pointer"
-              size="lg"
-              type="button"
-              variant={"secondary"}
-            >
-              View Profile
-            </Button>
-          </Link>
+          {/* student profile info */}
+          {studentProfile && (
+            <div>
+              <p className="capitalize">Major: {studentProfile.major}</p>
+            </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -110,7 +116,7 @@ const getRoleBadgeColor = (role?: Role) => {
     case "tutor":
       return "text-blue-600 border-blue-600";
     case "admin":
-      return "text-red-600 border-red-600";
+      return "text-purple-600 border-purple-600";
     default:
       return "text-gray-600 border-gray-600";
   }
